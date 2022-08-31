@@ -23,3 +23,4 @@ pluginManagement {
 }
 
 include(":core")
+include(":demo")
