@@ -1,5 +1,5 @@
-Compose Nav Typed
-=================
+Navigation Compose Typed
+========================
 
 Compile-time type-safe arguments for JetPack Navigation Compose library. Based on KotlinX.Serialization.
 
@@ -11,7 +11,7 @@ Compile-time type-safe arguments for JetPack Navigation Compose library. Based o
 Major features:
 
 - Complex types support, including nullability for primitive types - the only condition is that the type has to be serializable with KotlinX.Serializable library.
-- Based on official Serialization Kotlin compiler plugin - no slowdown with KSP nor KAPT.
+- Based on official Kotlin Serialization compiler plugin - no slowdown with KSP nor KAPT.
 - All JetPack Navigation Compose features: e.g. `navigateUp()` after a deeplink preserves the top-level shared arguments.
 - Few simple functions, no new complex `NavHost` or `NavController` types; this allows covering other JetPack Navigation Compose extensions.
 - Gradual integration, feel free to onboard just a part of your app.
@@ -25,7 +25,7 @@ implementation("com.kiwi.navigation-compose.typed:core:0.1.0")
 ```
 
 > **Warning**
-> This library uses Semantic Versioning. Be aware, that BC breaks are allowed in minor versions before the 1.0 version.
+> This library uses Semantic Versioning. Be aware that BC breaks are allowed in minor versions before the major 1.0 version.
 
 Create app's destinations
 
@@ -63,7 +63,7 @@ NavGraph(
 }
 ```
 
-Now, it is time to navigate! Convert the destination to `Route` instance and pass it to extension method on standard `NavController`.
+Now, it is time to navigate! Convert the destination to `Route` instance and pass it to the navigate extension method on the standard `NavController`.
 
 ```kotlin
 import com.kiwi.navigationcompose.typed.toRoute
