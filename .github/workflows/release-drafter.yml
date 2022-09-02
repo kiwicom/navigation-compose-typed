@@ -1,0 +1,40 @@
+name: Release Drafter
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_release_draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - run: |
+          TAG_NAME="${{ steps.create_release.outputs.tag_name }}"
+          VERSION_NAME="${TAG_NAME:1}"
+          sed -i "s/VERSION_NAME=[0-9]\+.[0-9]\+.[0-9]\+/VERSION_NAME=$VERSION_NAME/g" gradle.properties
+          if git diff --exit-code; then
+            echo "::set-output name=changes_exist::false"
+          else
+            echo "::set-output name=changes_exist::true"
+            echo "::set-output name=VERSION_NAME::$VERSION_NAME"
+          fi
+        id: version_job
+      - name: Commit and push files
+        if: ${{ steps.version_job.outputs.changes_exist == 'true' }}
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.GH_ACTION_DEPLOY_PRIVATE_KEY }}"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Bump version to ${{ steps.version_job.outputs.VERSION_NAME }}" -a
+          git push git@github.com:$GITHUB_REPOSITORY.git

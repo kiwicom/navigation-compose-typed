@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    env:
+      TERM: dumb
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 11
+      - name: Decrypt secrets
+        run: |
+          echo ${{ secrets.ENCRYPT_KEY }} | release/signing-unpack.sh
+          mv gradle.properties gradle.backup.properties
+          cat gradle.backup.properties | grep -v configuration-cache > gradle.properties
+      - name: Deploy to Sonatype
+        run: |
+          ./gradlew publish --no-parallel --stacktrace
+          ./gradlew closeAndReleaseRepository
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
+      - name: Build AAB & APK
+        run: |
+          ./gradlew :demo:bundleRelease :demo:assembleRelease
+      - name: Upload APK to release
+        uses: softprops/action-gh-release@v1
+        id: release
+        with:
+          files: |
+            core/build/outputs/apk/release/core-release.apk
+      - name: Clean secrets
+        if: always()
+        run: release/signing-cleanup.sh
