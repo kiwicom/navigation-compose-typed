@@ -11,7 +11,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 @OptIn(ExperimentalSerializationApi::class)
 @Composable
-internal fun DemoApplication() {
+internal fun NavHost() {
 	MaterialTheme {
 		val navController = rememberNavController()
 		NavHost(
