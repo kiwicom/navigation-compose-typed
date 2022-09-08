@@ -1,19 +1,16 @@
 package com.kiwi.navigationcompose.typed.internal
 
-import android.net.Uri
 import com.kiwi.navigationcompose.typed.internal.helpers.SubClass
 import com.kiwi.navigationcompose.typed.internal.helpers.SubObject
 import com.kiwi.navigationcompose.typed.internal.helpers.SubSealed
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.serializer
+import okhttp3.HttpUrl
 import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalSerializationApi::class)
-@RunWith(RobolectricTestRunner::class)
 internal class UriEncoderTest {
 	@Test
 	fun testValues() {
@@ -36,8 +33,11 @@ internal class UriEncoderTest {
 			val n: SubSealed,
 		)
 
-		val uri = Uri.Builder()
-		val encoder = UriEncoder(uri)
+		val url = HttpUrl.Builder().apply {
+			scheme("http")
+			host("example.com")
+		}
+		val encoder = UrlEncoder(url)
 		val testData = TestData(
 			a = 1,
 			b = 2.23f,
@@ -57,17 +57,25 @@ internal class UriEncoderTest {
 
 		encoder.encodeSerializableValue(serializer(), testData)
 
-		val expectedJ = Uri.encode("[8,9]")
-		val expectedK = Uri.encode("""{"10":"11"}""")
-		val expectedL = Uri.encode("""{"int":12}""")
-		val expectedM = Uri.encode("{}")
-		val expectedN = Uri.encode(
-			"""{"type":"com.kiwi.navigationcompose.typed.internal.helpers.SubSealed.B","int":13}""",
-		)
-		Assert.assertEquals(
-			"/1/2.23/3/true/value/4.0/5/6/7/$expectedJ/$expectedK/$expectedL/$expectedM/$expectedN",
-			uri.build().toString(),
-		)
+		val expectedUrl = HttpUrl.Builder().apply {
+			scheme("http")
+			host("example.com")
+			addPathSegment("1")
+			addPathSegment("2.23")
+			addPathSegment("3")
+			addPathSegment("true")
+			addPathSegment("value")
+			addPathSegment("4.0")
+			addPathSegment("5")
+			addPathSegment("6")
+			addPathSegment("7")
+			addPathSegment("[8,9]")
+			addPathSegment("""{"10":"11"}""")
+			addPathSegment("""{"int":12}""")
+			addPathSegment("{}")
+			addPathSegment("""{"type":"com.kiwi.navigationcompose.typed.internal.helpers.SubSealed.B","int":13}""")
+		}
+		Assert.assertEquals(expectedUrl.toString(), url.toString())
 	}
 
 	@Test
@@ -91,17 +99,26 @@ internal class UriEncoderTest {
 			val n: SubSealed? = null,
 		)
 
-		val uri = Uri.Builder()
-		val encoder = UriEncoder(uri)
+		val url = HttpUrl.Builder().apply {
+			scheme("http")
+			host("example.com")
+		}
+		val encoder = UrlEncoder(url)
 		val testData = TestData()
 
 		encoder.encodeSerializableValue(serializer(), testData)
 
-		val expectedK = Uri.encode("""{"10":"11"}""")
-		val expectedM = Uri.encode("{}")
-		Assert.assertEquals(
-			"?a=1&c=3&e=value&g=5&i=7&k=$expectedK&m=$expectedM",
-			uri.build().toString(),
-		)
+		val expectedUrl = HttpUrl.Builder().apply {
+			scheme("http")
+			host("example.com")
+			addQueryParameter("a", "1")
+			addQueryParameter("c", "3")
+			addQueryParameter("e", "value")
+			addQueryParameter("g", "5")
+			addQueryParameter("i", "7")
+			addQueryParameter("k", """{"10":"11"}""")
+			addQueryParameter("m", "{}")
+		}
+		Assert.assertEquals(expectedUrl.toString(), url.toString())
 	}
 }

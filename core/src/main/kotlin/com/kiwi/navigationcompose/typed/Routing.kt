@@ -1,11 +1,11 @@
 package com.kiwi.navigationcompose.typed
 
-import android.net.Uri
-import com.kiwi.navigationcompose.typed.internal.UriEncoder
+import com.kiwi.navigationcompose.typed.internal.UrlEncoder
 import com.kiwi.navigationcompose.typed.internal.createRouteSlug
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
+import okhttp3.HttpUrl
 
 /**
  * Converts a Destination to route pattern.
@@ -78,10 +78,11 @@ public inline fun <reified T : Destination> T.toRoute(): Route =
  */
 @ExperimentalSerializationApi
 public fun <T : Destination> T.createRoute(serializer: KSerializer<T>): Route {
-	val uriBuilder = Uri.Builder().apply {
-		appendEncodedPath(createRouteSlug(serializer))
+	val urlBuilder = HttpUrl.Builder().apply {
+		scheme("https")
+		host(createRouteSlug(serializer))
 	}
-	val encoder = UriEncoder(uriBuilder)
+	val encoder = UrlEncoder(urlBuilder)
 	encoder.encodeSerializableValue(serializer, this)
-	return Route(uriBuilder.build().toString().removePrefix("/"))
+	return Route(urlBuilder.build().toString().substring(8))
 }
