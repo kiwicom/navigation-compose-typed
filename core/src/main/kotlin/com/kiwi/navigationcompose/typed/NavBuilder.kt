@@ -12,6 +12,7 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.kiwi.navigationcompose.typed.internal.UriBundleDecoder
+import com.kiwi.navigationcompose.typed.internal.isNavTypeOptional
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
@@ -191,12 +192,10 @@ public fun <T : Destination> NavGraphBuilder.navigation(
 public fun createNavArguments(serializer: KSerializer<*>): List<NamedNavArgument> =
 	List(serializer.descriptor.elementsCount) { i ->
 		val name = serializer.descriptor.getElementName(i)
-		val descriptor = serializer.descriptor.getElementDescriptor(i)
 		navArgument(name) {
 			// Use StringType for all types to support nullability for all of them.
 			type = NavType.StringType
-			// Null is modelled as missing uri parameter, so it has to be optional as well.
-			val isOptional = serializer.descriptor.isElementOptional(i) || descriptor.isNullable
+			val isOptional = serializer.descriptor.isNavTypeOptional(i)
 			nullable = isOptional
 			// If something is optional, default value is required.
 			if (isOptional) {

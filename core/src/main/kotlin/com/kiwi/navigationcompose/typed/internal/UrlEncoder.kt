@@ -30,7 +30,7 @@ internal class UrlEncoder(
 
 	override fun encodeElement(descriptor: SerialDescriptor, index: Int): Boolean {
 		elementName = descriptor.getElementName(index)
-		elementOptional = descriptor.isElementOptional(index) || descriptor.getElementDescriptor(index).isNullable
+		elementOptional = descriptor.isNavTypeOptional(index)
 		return true
 	}
 
