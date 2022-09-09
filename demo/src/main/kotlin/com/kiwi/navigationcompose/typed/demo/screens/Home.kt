@@ -54,5 +54,24 @@ internal fun Home(
 		) {
 			Text("Demo 2")
 		}
+
+		OutlinedButton(
+			onClick = {
+				onNavigate(
+					Destinations.Demo(
+						int = 1,
+						intNullable = 2,
+						intOptional = 3,
+						intNullableOptional = 4,
+						string = "",
+						stringNullable = "",
+						stringOptional = "",
+						stringNullableOptional = "",
+					).toRoute(),
+				)
+			},
+		) {
+			Text("Demo 3")
+		}
 	}
 }

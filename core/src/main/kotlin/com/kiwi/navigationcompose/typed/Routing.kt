@@ -2,6 +2,7 @@ package com.kiwi.navigationcompose.typed
 
 import com.kiwi.navigationcompose.typed.internal.UrlEncoder
 import com.kiwi.navigationcompose.typed.internal.createRouteSlug
+import com.kiwi.navigationcompose.typed.internal.isNavTypeOptional
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
@@ -39,7 +40,7 @@ public fun <T : Destination> createRoutePattern(serializer: KSerializer<T>): Str
 	val query = StringBuilder()
 	for (i in 0 until serializer.descriptor.elementsCount) {
 		val name = serializer.descriptor.getElementName(i)
-		if (serializer.descriptor.isElementOptional(i) || serializer.descriptor.getElementDescriptor(i).isNullable) {
+		if (serializer.descriptor.isNavTypeOptional(i)) {
 			query.append("&$name={$name}")
 		} else {
 			path.append("/{$name}")

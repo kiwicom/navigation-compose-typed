@@ -64,7 +64,7 @@ internal class UriEncoderTest {
 			addPathSegment("2.23")
 			addPathSegment("3")
 			addPathSegment("true")
-			addPathSegment("value")
+			addQueryParameter("e", "value")
 			addPathSegment("4.0")
 			addPathSegment("5")
 			addPathSegment("6")
