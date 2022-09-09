@@ -81,9 +81,10 @@ public inline fun <reified T : Destination> T.toRoute(): Route =
 public fun <T : Destination> T.createRoute(serializer: KSerializer<T>): Route {
 	val urlBuilder = HttpUrl.Builder().apply {
 		scheme("https")
-		host(createRouteSlug(serializer))
+		host("a")
+		addPathSegment(createRouteSlug(serializer))
 	}
 	val encoder = UrlEncoder(urlBuilder)
 	encoder.encodeSerializableValue(serializer, this)
-	return Route(urlBuilder.build().toString().substring(8))
+	return Route(urlBuilder.build().toString().substring(10))
 }
