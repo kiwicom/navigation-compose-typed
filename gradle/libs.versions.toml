@@ -31,4 +31,4 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-lang" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-lang" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-lang" }
 mavenPublish = { id = "com.vanniktech.maven.publish.base", version.ref = "mavenPublish" }
-kotlinter = { id = "org.jmailen.kotlinter", version = "3.11.1" }
+kotlinter = { id = "org.jmailen.kotlinter", version = "3.12.0" }
