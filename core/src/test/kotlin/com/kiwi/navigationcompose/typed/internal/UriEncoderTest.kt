@@ -1,6 +1,7 @@
 package com.kiwi.navigationcompose.typed.internal
 
 import android.net.Uri
+import com.kiwi.navigationcompose.typed.internal.helpers.ArticleId
 import com.kiwi.navigationcompose.typed.internal.helpers.SubClass
 import com.kiwi.navigationcompose.typed.internal.helpers.SubObject
 import com.kiwi.navigationcompose.typed.internal.helpers.SubSealed
@@ -34,6 +35,7 @@ internal class UriEncoderTest {
 			val l: SubClass,
 			val m: SubObject,
 			val n: SubSealed,
+			val o: ArticleId,
 		)
 
 		val url = Uri.Builder()
@@ -53,6 +55,7 @@ internal class UriEncoderTest {
 			l = SubClass(12),
 			m = SubObject,
 			n = SubSealed.B(13),
+			o = ArticleId("14"),
 		)
 
 		encoder.encodeSerializableValue(serializer(), testData)
@@ -72,6 +75,7 @@ internal class UriEncoderTest {
 			appendPath("""{"int":12}""")
 			appendPath("{}")
 			appendPath("""{"type":"com.kiwi.navigationcompose.typed.internal.helpers.SubSealed.B","int":13}""")
+			appendPath("\"14\"")
 		}
 		Assert.assertEquals(expectedUrl.toString(), url.toString())
 	}
@@ -95,6 +99,7 @@ internal class UriEncoderTest {
 			val l: SubClass? = null,
 			val m: SubObject? = SubObject,
 			val n: SubSealed? = null,
+			val o: ArticleId? = ArticleId("14"),
 		)
 
 		val url = Uri.Builder()
@@ -111,6 +116,7 @@ internal class UriEncoderTest {
 			appendQueryParameter("i", "7")
 			appendQueryParameter("k", """{"10":"11"}""")
 			appendQueryParameter("m", "{}")
+			appendQueryParameter("o", "\"14\"")
 		}
 		Assert.assertEquals(expectedUrl.toString(), url.toString())
 	}

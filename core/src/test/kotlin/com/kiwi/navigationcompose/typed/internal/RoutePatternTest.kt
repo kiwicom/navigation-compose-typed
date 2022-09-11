@@ -2,6 +2,7 @@ package com.kiwi.navigationcompose.typed.internal
 
 import com.kiwi.navigationcompose.typed.Destination
 import com.kiwi.navigationcompose.typed.createRoutePattern
+import com.kiwi.navigationcompose.typed.internal.helpers.ArticleId
 import com.kiwi.navigationcompose.typed.internal.helpers.SubClass
 import com.kiwi.navigationcompose.typed.internal.helpers.SubObject
 import com.kiwi.navigationcompose.typed.internal.helpers.SubSealed
@@ -31,10 +32,11 @@ internal class RoutePatternTest {
 			val l: SubClass = SubClass(12),
 			val m: SubObject,
 			val n: SubSealed = SubSealed.B(13),
+			val o: ArticleId,
 		) : Destination
 
 		Assert.assertEquals(
-			"com.kiwi.navigationcompose.typed.internal.RoutePatternTest.test.TestData/{a}/{c}/{g}/{i}/{k}/{m}?b={b}&d={d}&e={e}&f={f}&h={h}&j={j}&l={l}&n={n}",
+			"com.kiwi.navigationcompose.typed.internal.RoutePatternTest.test.TestData/{a}/{c}/{g}/{i}/{k}/{m}/{o}?b={b}&d={d}&e={e}&f={f}&h={h}&j={j}&l={l}&n={n}",
 			createRoutePattern<TestData>(),
 		)
 	}

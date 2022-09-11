@@ -2,6 +2,7 @@ package com.kiwi.navigationcompose.typed.internal
 
 import androidx.core.os.bundleOf
 import com.kiwi.navigationcompose.typed.Destination
+import com.kiwi.navigationcompose.typed.internal.helpers.ArticleId
 import com.kiwi.navigationcompose.typed.internal.helpers.SubClass
 import com.kiwi.navigationcompose.typed.internal.helpers.SubObject
 import com.kiwi.navigationcompose.typed.internal.helpers.SubSealed
@@ -33,6 +34,7 @@ internal class UriBundleDecoderTest {
 		val l: SubClass,
 		val m: SubObject,
 		val n: SubSealed,
+		val o: ArticleId,
 	) : Destination
 
 	@Test
@@ -48,6 +50,7 @@ internal class UriBundleDecoderTest {
 			"l" to """{"int":12}""",
 			"m" to "{}",
 			"n" to """{"type":"com.kiwi.navigationcompose.typed.internal.helpers.SubSealed.B","int":13}""",
+			"o" to "\"14\"",
 		)
 
 		val decoder = UriBundleDecoder(bundle)
@@ -67,5 +70,6 @@ internal class UriBundleDecoderTest {
 		Assert.assertEquals(12, data.l.int)
 		Assert.assertEquals(SubObject, data.m)
 		Assert.assertEquals(13, (data.n as? SubSealed.B)?.int)
+		Assert.assertEquals(ArticleId("14"), data.o)
 	}
 }
