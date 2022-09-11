@@ -7,14 +7,17 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.AbstractDecoder
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.EmptySerializersModule
 import kotlinx.serialization.modules.SerializersModule
 
 @ExperimentalSerializationApi
 internal class UriBundleDecoder(
 	private val bundle: Bundle,
 ) : AbstractDecoder() {
-	override val serializersModule: SerializersModule = EmptySerializersModule()
+	override val serializersModule: SerializersModule by lazy { getSerializersModule() }
+
+	private val json by lazy {
+		Json { serializersModule = this@UriBundleDecoder.serializersModule }
+	}
 
 	private var root = true
 	private var elementsCount = 0
@@ -25,7 +28,7 @@ internal class UriBundleDecoder(
 		return if (root || deserializer.descriptor.kind.isNativelySupported()) {
 			super.decodeSerializableValue(deserializer)
 		} else {
-			Json.decodeFromString(deserializer, decodeString())
+			json.decodeFromString(deserializer, decodeString())
 		}
 	}
 

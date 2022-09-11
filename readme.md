@@ -21,7 +21,7 @@ Major features:
 Add the dependency
 
 ```kotlin
-implementation("com.kiwi.navigation-compose.typed:core:0.1.0")
+implementation("com.kiwi.navigation-compose.typed:core:<version>")
 ```
 
 > **Warning**
@@ -63,10 +63,10 @@ NavGraph(
 }
 ```
 
-Now, it is time to navigate! Convert the destination to `Route` instance and pass it to the navigate extension method on the standard `NavController`.
+Now, it is time to navigate! Create a `Destination` instance and pass it to the navigate extension method on the standard `NavController`.
 
 ```kotlin
-import com.kiwi.navigationcompose.typed.toRoute
+import com.kiwi.navigationcompose.typed.Destination
 import com.kiwi.navigationcompose.typed.navigate
 
 @Composable
@@ -83,10 +83,10 @@ fun AppNavHost() {
 
 @Composable
 private fun Home(
-	onNavigate: (Route) -> Unit,
+	onNavigate: (Destination) -> Unit,
 ) {
 	Home(
-		onArticleClick = { id -> onNavigate(Destinations.Article(id).toRoute()) },
+		onArticleClick = { id -> onNavigate(Destinations.Article(id)) },
 	)
 }
 
@@ -103,18 +103,20 @@ private fun Home(
 
 ### Extensibility
 
-What about cooperation with Accompanist's `AnimatedNavHost` or `bottomSheet {}`? Do not worry. Basically, all this are just three simple functions. Create your own abstraction and use `createRoutePattern()`, `createNavArguments()` and `decodeArguments()` functions.
+What about cooperation with Accompanist's `AnimatedNavHost` or `bottomSheet {}`? Do not worry. Basically, all this are just few simple functions. Create your own abstraction and use `createRoutePattern()`, `createNavArguments()`, `decodeArguments()` and `registerDestinationType()` functions.
 
 ```kotlin
 import com.kiwi.navigationcompose.typed.createRoutePattern
 import com.kiwi.navigationcompose.typed.createNavArguments
 import com.kiwi.navigationcompose.typed.decodeArguments
 import com.kiwi.navigationcompose.typed.Destination
+import com.kiwi.navigationcompose.typed.registerDestinationType
 
 private inline fun <reified T : Destination> NavGraphBuilder.bottomSheet(
 	noinline content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
 	val serializer = serializer<T>()
+	registerDestinationType(T::class, serializer)
 	bottomSheet(
 		route = createRoutePattern(serializer),
 		arguments = createNavArguments(serializer),

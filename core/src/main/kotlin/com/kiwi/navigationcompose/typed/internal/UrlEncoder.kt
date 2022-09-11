@@ -6,7 +6,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.AbstractEncoder
 import kotlinx.serialization.encoding.CompositeEncoder
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.EmptySerializersModule
 import kotlinx.serialization.modules.SerializersModule
 import okhttp3.HttpUrl
 
@@ -14,7 +13,11 @@ import okhttp3.HttpUrl
 internal class UrlEncoder(
 	private val url: HttpUrl.Builder,
 ) : AbstractEncoder() {
-	override val serializersModule: SerializersModule = EmptySerializersModule()
+	override val serializersModule: SerializersModule by lazy { getSerializersModule() }
+
+	private val json by lazy {
+		Json { serializersModule = this@UrlEncoder.serializersModule }
+	}
 
 	private var root = true
 	private var elementName = ""
@@ -24,7 +27,7 @@ internal class UrlEncoder(
 		if (root || serializer.descriptor.kind.isNativelySupported()) {
 			super.encodeSerializableValue(serializer, value)
 		} else {
-			encodeString(Json.encodeToString(serializer, value))
+			encodeString(json.encodeToString(serializer, value))
 		}
 	}
 

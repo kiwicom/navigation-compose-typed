@@ -7,14 +7,13 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.kiwi.navigationcompose.typed.Route
-import com.kiwi.navigationcompose.typed.toRoute
+import com.kiwi.navigationcompose.typed.Destination
 import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
 @Composable
 internal fun Home(
-	onNavigate: (Route) -> Unit,
+	onNavigate: (Destination) -> Unit,
 ) {
 	Column(
 		Modifier
@@ -29,7 +28,7 @@ internal fun Home(
 						intNullable = null,
 						string = "test",
 						stringNullable = null,
-					).toRoute(),
+					),
 				)
 			},
 		) {
@@ -48,7 +47,7 @@ internal fun Home(
 						stringNullable = "test2",
 						stringOptional = "test3",
 						stringNullableOptional = "test4",
-					).toRoute(),
+					),
 				)
 			},
 		) {
@@ -67,7 +66,7 @@ internal fun Home(
 						stringNullable = "",
 						stringOptional = "",
 						stringNullableOptional = "",
-					).toRoute(),
+					),
 				)
 			},
 		) {

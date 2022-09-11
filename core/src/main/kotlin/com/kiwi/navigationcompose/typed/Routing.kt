@@ -1,12 +1,34 @@
 package com.kiwi.navigationcompose.typed
 
-import com.kiwi.navigationcompose.typed.internal.UrlEncoder
+import androidx.annotation.MainThread
+import com.kiwi.navigationcompose.typed.internal.addPolymorphicType
 import com.kiwi.navigationcompose.typed.internal.createRouteSlug
 import com.kiwi.navigationcompose.typed.internal.isNavTypeOptional
+import kotlin.reflect.KClass
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
-import okhttp3.HttpUrl
+
+/**
+ * Registers particular Destination type as polymorphic subclass of [Destination].
+ */
+@MainThread
+public inline fun <reified T : Destination> registerDestinationType() {
+	registerDestinationType(T::class, serializer())
+}
+
+/**
+ * Registers particular Destination type as polymorphic subclass of [Destination].
+ *
+ * Utilize the reified version of this function.
+ */
+@MainThread
+public fun <T : Destination> registerDestinationType(
+	kClass: KClass<T>,
+	serializer: KSerializer<T>,
+) {
+	addPolymorphicType { subclass(kClass, serializer) }
+}
 
 /**
  * Converts a Destination to route pattern.
@@ -51,40 +73,4 @@ public fun <T : Destination> createRoutePattern(serializer: KSerializer<T>): Str
 	}
 
 	return destination + path.toString() + query.toString()
-}
-
-/**
- * Converts a Destination to Route.
- *
- * This conversion is inlined, the specific generic T argument has to be "known", i.e. this conversion
- * cannot happen later in the flow with T being just a Destination. Covert to Route at the same time
- * when you are creating the destination instance.
- *
- * ```
- * class HomeViewModel : ViewModel() {
- *     fun onArticleClick(id: Int) {
- *         navEvents.tryEmit(Destinations.Article(id).toRoute())
- *     }
- * }
- * ```
- */
-@ExperimentalSerializationApi
-public inline fun <reified T : Destination> T.toRoute(): Route =
-	createRoute(serializer())
-
-/**
- * Converts a Destination to Route.
- *
- * Utilize the generic variant of this function.
- */
-@ExperimentalSerializationApi
-public fun <T : Destination> T.createRoute(serializer: KSerializer<T>): Route {
-	val urlBuilder = HttpUrl.Builder().apply {
-		scheme("https")
-		host("a")
-		addPathSegment(createRouteSlug(serializer))
-	}
-	val encoder = UrlEncoder(urlBuilder)
-	encoder.encodeSerializableValue(serializer, this)
-	return Route(urlBuilder.build().toString().substring(10))
 }

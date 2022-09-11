@@ -1,6 +1,7 @@
 package com.kiwi.navigationcompose.typed
 
 import android.os.Bundle
+import androidx.annotation.MainThread
 import androidx.compose.runtime.Composable
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
@@ -13,6 +14,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.kiwi.navigationcompose.typed.internal.UriBundleDecoder
 import com.kiwi.navigationcompose.typed.internal.isNavTypeOptional
+import kotlin.reflect.KClass
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
@@ -39,11 +41,13 @@ import kotlinx.serialization.serializer
  * ```
  */
 @ExperimentalSerializationApi
+@MainThread
 public inline fun <reified T : Destination> NavGraphBuilder.composable(
 	deepLinks: List<NavDeepLink> = emptyList(),
 	noinline content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
 	composable(
+		kClass = T::class,
 		serializer = serializer(),
 		deepLinks = deepLinks,
 		content = content,
@@ -57,11 +61,14 @@ public inline fun <reified T : Destination> NavGraphBuilder.composable(
  * prefer using the generic function variant.
  */
 @ExperimentalSerializationApi
+@MainThread
 public fun <T : Destination> NavGraphBuilder.composable(
+	kClass: KClass<T>,
 	serializer: KSerializer<T>,
 	deepLinks: List<NavDeepLink> = emptyList(),
 	content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
+	registerDestinationType(kClass, serializer)
 	composable(
 		route = createRoutePattern(serializer),
 		arguments = createNavArguments(serializer),
@@ -91,11 +98,13 @@ public fun <T : Destination> NavGraphBuilder.composable(
  * ```
  */
 @ExperimentalSerializationApi
+@MainThread
 public inline fun <reified T : Destination> NavGraphBuilder.dialog(
 	deepLinks: List<NavDeepLink> = emptyList(),
 	noinline content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
 	dialog(
+		kClass = T::class,
 		serializer = serializer(),
 		deepLinks = deepLinks,
 		content = content,
@@ -109,11 +118,14 @@ public inline fun <reified T : Destination> NavGraphBuilder.dialog(
  * prefer using the generic function variant.
  */
 @ExperimentalSerializationApi
+@MainThread
 public fun <T : Destination> NavGraphBuilder.dialog(
+	kClass: KClass<T>,
 	serializer: KSerializer<T>,
 	deepLinks: List<NavDeepLink> = emptyList(),
 	content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
+	registerDestinationType(kClass, serializer)
 	dialog(
 		route = createRoutePattern(serializer),
 		arguments = createNavArguments(serializer),
@@ -154,6 +166,7 @@ public inline fun <reified T : Destination> NavGraphBuilder.navigation(
 	noinline builder: NavGraphBuilder.() -> Unit,
 ) {
 	navigation(
+		kClass = T::class,
 		serializer = serializer<T>(),
 		startDestination = startDestination,
 		deepLinks = deepLinks,
@@ -170,12 +183,15 @@ public inline fun <reified T : Destination> NavGraphBuilder.navigation(
  * The start destination is passed as a RoutePattern obtained from a relevant Destination instance.
  */
 @ExperimentalSerializationApi
+@MainThread
 public fun <T : Destination> NavGraphBuilder.navigation(
+	kClass: KClass<T>,
 	serializer: KSerializer<T>,
 	startDestination: String,
 	deepLinks: List<NavDeepLink> = emptyList(),
 	builder: NavGraphBuilder.() -> Unit,
 ) {
+	registerDestinationType(kClass, serializer)
 	navigation(
 		startDestination = startDestination,
 		route = createRoutePattern(serializer),
