@@ -54,7 +54,6 @@ dependencies {
 	implementation(libs.kotlin.stdlib)
 	implementation(libs.kotlin.serialization)
 	implementation(libs.compose.navigation)
-	implementation(libs.okhttp)
 
 	testImplementation(libs.junit)
 	testImplementation(libs.roboletric)

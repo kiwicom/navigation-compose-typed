@@ -34,7 +34,7 @@ internal class RoutePatternTest {
 		) : Destination
 
 		Assert.assertEquals(
-			"com.kiwi.navigationcompose.typed.internal.RoutePatternTest.test.TestData/{a}/{c}/{e}/{g}/{i}/{k}/{m}?b={b}&d={d}&f={f}&h={h}&j={j}&l={l}&n={n}",
+			"com.kiwi.navigationcompose.typed.internal.RoutePatternTest.test.TestData/{a}/{c}/{g}/{i}/{k}/{m}?b={b}&d={d}&e={e}&f={f}&h={h}&j={j}&l={l}&n={n}",
 			createRoutePattern<TestData>(),
 		)
 	}

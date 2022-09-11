@@ -1,20 +1,23 @@
 package com.kiwi.navigationcompose.typed.internal
 
+import android.net.Uri
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.AbstractEncoder
 import kotlinx.serialization.encoding.CompositeEncoder
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.EmptySerializersModule
 import kotlinx.serialization.modules.SerializersModule
-import okhttp3.HttpUrl
 
 @ExperimentalSerializationApi
 internal class UrlEncoder(
-	private val url: HttpUrl.Builder,
+	private val url: Uri.Builder,
 ) : AbstractEncoder() {
-	override val serializersModule: SerializersModule = EmptySerializersModule()
+	override val serializersModule: SerializersModule by lazy { getSerializersModule() }
+
+	private val json by lazy {
+		Json { serializersModule = this@UrlEncoder.serializersModule }
+	}
 
 	private var root = true
 	private var elementName = ""
@@ -24,7 +27,7 @@ internal class UrlEncoder(
 		if (root || serializer.descriptor.kind.isNativelySupported()) {
 			super.encodeSerializableValue(serializer, value)
 		} else {
-			encodeString(Json.encodeToString(serializer, value))
+			encodeString(json.encodeToString(serializer, value))
 		}
 	}
 
@@ -58,9 +61,9 @@ internal class UrlEncoder(
 
 	private fun appendValue(value: String) {
 		if (elementOptional) {
-			url.addQueryParameter(elementName, value)
+			url.appendQueryParameter(elementName, value)
 		} else {
-			url.addPathSegment(value)
+			url.appendPath(value)
 		}
 	}
 }
