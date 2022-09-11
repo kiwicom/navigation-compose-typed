@@ -21,8 +21,8 @@ internal fun SerialKind.isNativelySupported(): Boolean =
 /**
  * Optional parameter is if:
  * - there is a default value for the property
- * - property is nullable -> is has to be modelled as a missing uri parameter
- * - property is a String that can be empty -> it has to be modelled as query parameter
+ * - property is nullable -> it has to be modelled as a missing query parameter
+ * - property is a String that can be empty -> it has to be modelled as a query parameter
  */
 @ExperimentalSerializationApi
 internal fun SerialDescriptor.isNavTypeOptional(index: Int): Boolean =
