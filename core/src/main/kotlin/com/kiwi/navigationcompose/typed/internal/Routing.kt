@@ -1,11 +1,11 @@
 package com.kiwi.navigationcompose.typed.internal
 
+import android.net.Uri
 import androidx.annotation.MainThread
 import com.kiwi.navigationcompose.typed.Destination
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationStrategy
-import okhttp3.HttpUrl
 
 @ExperimentalSerializationApi
 internal fun createRouteSlug(serializer: KSerializer<*>): String =
@@ -38,12 +38,10 @@ internal fun <T : Destination> T.toRoute(): String {
 	) {
 		"Polymorphic serializer for $this is not registered. Use registerDestination<T>()."
 	}
-	val urlBuilder = HttpUrl.Builder().apply {
-		scheme("https")
-		host("a")
-		addPathSegment(createRouteSlug(serializer))
+	val urlBuilder = Uri.Builder().apply {
+		appendPath(createRouteSlug(serializer))
 	}
 	val encoder = UrlEncoder(urlBuilder)
 	encoder.encodeSerializableValue(serializer, this)
-	return urlBuilder.build().toString().substring(10)
+	return urlBuilder.build().toString().substring(1)
 }

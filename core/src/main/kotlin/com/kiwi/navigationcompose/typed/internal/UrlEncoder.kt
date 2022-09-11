@@ -1,5 +1,6 @@
 package com.kiwi.navigationcompose.typed.internal
 
+import android.net.Uri
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -7,11 +8,10 @@ import kotlinx.serialization.encoding.AbstractEncoder
 import kotlinx.serialization.encoding.CompositeEncoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import okhttp3.HttpUrl
 
 @ExperimentalSerializationApi
 internal class UrlEncoder(
-	private val url: HttpUrl.Builder,
+	private val url: Uri.Builder,
 ) : AbstractEncoder() {
 	override val serializersModule: SerializersModule by lazy { getSerializersModule() }
 
@@ -61,9 +61,9 @@ internal class UrlEncoder(
 
 	private fun appendValue(value: String) {
 		if (elementOptional) {
-			url.addQueryParameter(elementName, value)
+			url.appendQueryParameter(elementName, value)
 		} else {
-			url.addPathSegment(value)
+			url.appendPath(value)
 		}
 	}
 }

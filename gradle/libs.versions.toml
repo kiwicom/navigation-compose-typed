@@ -19,7 +19,6 @@ kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-j
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose-main" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
 junit = { module = "junit:junit", version = "4.13.2" }
-okhttp = { module = "com.squareup.okhttp3:okhttp", version = "4.10.0" }
 roboletric = { module = "org.robolectric:robolectric", version = "4.8.2" }
 
 [bundles]
