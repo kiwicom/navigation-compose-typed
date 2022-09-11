@@ -42,3 +42,15 @@ public inline fun <reified T : Destination> NavOptionsBuilder.popUpTo(
 ) {
 	popUpTo(createRoutePattern<T>(), popUpToBuilder)
 }
+
+@ExperimentalSerializationApi
+public inline fun <reified T : Destination> NavController.popBackStack(
+	inclusive: Boolean,
+	saveState: Boolean = false,
+): Boolean {
+	return popBackStack(
+		route = createRoutePattern<T>(),
+		inclusive = inclusive,
+		saveState = saveState,
+	)
+}
