@@ -18,10 +18,16 @@ Major features:
 
 ### QuickStart
 
-Add the dependency
+Add this library dependency and KotlinX.Serialization support
 
 ```kotlin
-implementation("com.kiwi.navigation-compose.typed:core:<version>")
+plugins {
+	id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
+}
+dependencies {
+	implementation("com.kiwi.navigation-compose.typed:core:<version>")
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+}
 ```
 
 > **Warning**
