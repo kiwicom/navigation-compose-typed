@@ -53,7 +53,7 @@ subprojects {
 			group = requireNotNull(project.findProperty("GROUP"))
 			version = requireNotNull(project.findProperty("VERSION_NAME"))
 			pomFromGradleProperties()
-			publishToMavenCentral(SonatypeHost.S01)
+			publishToMavenCentral(SonatypeHost.S01, true)
 			signAllPublications()
 			configure(AndroidSingleVariantLibrary())
 		}
