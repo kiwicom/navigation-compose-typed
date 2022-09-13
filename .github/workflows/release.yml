@@ -35,7 +35,7 @@ jobs:
         id: release
         with:
           files: |
-            core/build/outputs/apk/release/core-release.apk
+            demo/build/outputs/apk/release/demo-release.apk
       - name: Clean secrets
         if: always()
         run: release/signing-cleanup.sh
