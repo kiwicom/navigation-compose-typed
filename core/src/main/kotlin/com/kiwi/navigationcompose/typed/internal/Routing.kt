@@ -36,7 +36,7 @@ internal fun <T : Destination> T.toRoute(): String {
 	val serializer = requireNotNull(
 		getSerializersModule().getPolymorphic(Destination::class, this),
 	) {
-		"Polymorphic serializer for $this is not registered. Use registerDestination<T>()."
+		"Polymorphic serializer for $this is not registered. Use registerDestinationType() function."
 	}
 	val urlBuilder = Uri.Builder().apply {
 		appendPath(createRouteSlug(serializer))
