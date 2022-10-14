@@ -8,6 +8,17 @@ internal sealed interface Destinations : Destination {
 	object Home : Destinations
 
 	@Serializable
+	object List : Destinations
+
+	@Serializable
+	object Profile : Destinations
+}
+
+internal sealed interface HomeDestinations : Destination {
+	@Serializable
+	object Home : HomeDestinations
+
+	@Serializable
 	data class Demo(
 		val int: Int,
 		val intNullable: Int?,
@@ -17,5 +28,5 @@ internal sealed interface Destinations : Destination {
 		val stringNullable: String?,
 		val stringOptional: String = "default",
 		val stringNullableOptional: String? = null,
-	) : Destinations
+	) : HomeDestinations
 }

@@ -1,4 +1,4 @@
-package com.kiwi.navigationcompose.typed.demo
+package com.kiwi.navigationcompose.typed.demo.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.kiwi.navigationcompose.typed.Destination
+import com.kiwi.navigationcompose.typed.demo.HomeDestinations
 import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
@@ -19,11 +21,12 @@ internal fun Home(
 		Modifier
 			.fillMaxSize()
 			.wrapContentSize(),
+		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
 		OutlinedButton(
 			onClick = {
 				onNavigate(
-					Destinations.Demo(
+					HomeDestinations.Demo(
 						int = 1,
 						intNullable = null,
 						string = "test",
@@ -38,7 +41,7 @@ internal fun Home(
 		OutlinedButton(
 			onClick = {
 				onNavigate(
-					Destinations.Demo(
+					HomeDestinations.Demo(
 						int = 1,
 						intNullable = 2,
 						intOptional = 3,
@@ -57,7 +60,7 @@ internal fun Home(
 		OutlinedButton(
 			onClick = {
 				onNavigate(
-					Destinations.Demo(
+					HomeDestinations.Demo(
 						int = 1,
 						intNullable = 2,
 						intOptional = 3,
