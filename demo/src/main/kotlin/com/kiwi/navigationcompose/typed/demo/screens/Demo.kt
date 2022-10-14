@@ -1,4 +1,4 @@
-package com.kiwi.navigationcompose.typed.demo
+package com.kiwi.navigationcompose.typed.demo.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +13,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.kiwi.navigationcompose.typed.demo.HomeDestinations
 
 @Composable
 internal fun Demo(
-	args: Destinations.Demo,
+	args: HomeDestinations.Demo,
 	onNavigateUp: () -> Unit,
 ) {
 	Scaffold(
