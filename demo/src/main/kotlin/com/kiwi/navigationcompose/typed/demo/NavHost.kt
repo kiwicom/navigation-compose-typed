@@ -8,7 +8,10 @@ import com.kiwi.navigationcompose.typed.createRoutePattern
 import com.kiwi.navigationcompose.typed.demo.screens.Demo
 import com.kiwi.navigationcompose.typed.demo.screens.Home
 import com.kiwi.navigationcompose.typed.demo.screens.List
+import com.kiwi.navigationcompose.typed.demo.screens.NameEditDialog
+import com.kiwi.navigationcompose.typed.demo.screens.NameEditScreen
 import com.kiwi.navigationcompose.typed.demo.screens.Profile
+import com.kiwi.navigationcompose.typed.dialog
 import com.kiwi.navigationcompose.typed.navigate
 import com.kiwi.navigationcompose.typed.navigation
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -27,6 +30,12 @@ internal fun NavHost(navController: NavHostController) {
 			composable<HomeDestinations.Demo> { Demo(this, navController::navigateUp) }
 		}
 		composable<Destinations.List> { List() }
-		composable<Destinations.Profile> { Profile() }
+		navigation<Destinations.Profile>(
+			startDestination = createRoutePattern<ProfileDestinations.Home>(),
+		) {
+			composable<ProfileDestinations.Home> { Profile(navController) }
+			dialog<ProfileDestinations.NameEditDialog> { NameEditDialog(navController) }
+			composable<ProfileDestinations.NameEditScreen> { NameEditScreen(navController) }
+		}
 	}
 }
