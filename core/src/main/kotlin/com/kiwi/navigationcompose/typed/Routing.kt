@@ -31,7 +31,7 @@ public fun <T : Destination> registerDestinationType(
 }
 
 /**
- * Converts a Destination to route pattern.
+ * Converts a Destination to a route pattern.
  *
  * Use the route pattern for startDestination argument when using a NavGraph/navigation composables.
  *
@@ -47,7 +47,7 @@ public inline fun <reified T : Destination> createRoutePattern(): String =
 	createRoutePattern(serializer<T>())
 
 /**
- * Converts a Destination to route pattern.
+ * Converts a Destination to a route pattern.
  *
  * Utilize the generic variant of this function.
  */

@@ -22,7 +22,7 @@ import kotlinx.serialization.serializer
 /**
  * Add the Composable to the NavGraphBuilder with type-safe arguments and route.
  *
- * Pass the unique destination as generic argument T. This function is inlined, you can provide the
+ * Pass the unique destination as a generic argument T. This function is inlined, you can provide the
  * destination serialization manually using the function variant with serializer argument.
  *
  * Arguments (a Destination instance) are available as a composable lambda's receiver. You can read those
@@ -167,7 +167,7 @@ public inline fun <reified T : Destination> NavGraphBuilder.navigation(
 ) {
 	navigation(
 		kClass = T::class,
-		serializer = serializer<T>(),
+		serializer = serializer(),
 		startDestination = startDestination,
 		deepLinks = deepLinks,
 		builder = builder,
@@ -213,7 +213,7 @@ public fun createNavArguments(serializer: KSerializer<*>): List<NamedNavArgument
 			type = NavType.StringType
 			val isOptional = serializer.descriptor.isNavTypeOptional(i)
 			nullable = isOptional
-			// If something is optional, default value is required.
+			// If something is optional, the default value is required.
 			if (isOptional) {
 				defaultValue = null
 			}
@@ -228,7 +228,7 @@ public fun <T : Destination> decodeArguments(
 	serializer: KSerializer<T>,
 	navBackStackEntry: NavBackStackEntry,
 ): T {
-	// Arguments may be empty if the destination does not have any parameters
+	// Arguments may be empty if the destination does not have any parameters,
 	// and it is a start destination.
 	val decoder = UriBundleDecoder(navBackStackEntry.arguments ?: Bundle())
 	return decoder.decodeSerializableValue(serializer)

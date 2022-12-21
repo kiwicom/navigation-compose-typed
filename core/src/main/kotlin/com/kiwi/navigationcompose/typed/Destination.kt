@@ -5,7 +5,7 @@ package com.kiwi.navigationcompose.typed
  *
  * Each destination has to be a KotlinX-Serializable type.
  *
- * Utilize sealed interface to set of known destinations:
+ * Utilize sealed interface to define a set of known destinations:
  *
  * ```
  * sealed interface Destinations : Destination {

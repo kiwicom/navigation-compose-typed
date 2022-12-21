@@ -18,7 +18,7 @@ internal fun createRouteSlug(serializationStrategy: SerializationStrategy<*>): S
 /**
  * Converts a Destination to Route.
  *
- * This conversion is inlined, the specific generic T argument has to be "known", i.e. this conversion
+ * This conversion is inlined. The specific generic T argument has to be "known", i.e. this conversion
  * cannot happen later in the flow with T being just a Destination. Covert to Route at the same time
  * when you are creating the destination instance.
  *
