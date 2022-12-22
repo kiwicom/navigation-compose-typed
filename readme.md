@@ -1,7 +1,7 @@
 Navigation Compose Typed
 ========================
 
-Compile-time type-safe arguments for Jetpack Navigation Compose library. Based on KotlinX.Serialization.
+Compile-time type-safe arguments for the Jetpack Navigation Compose library. Based on KotlinX.Serialization.
 
 [![Kiwi.com library](https://img.shields.io/badge/Kiwi.com-library-00A991)](https://code.kiwi.com)
 [![CI Build](https://img.shields.io/github/workflow/status/kiwicom/navigation-compose-typed/Build/main)](https://github.com/kiwicom/navigation-compose-typed/actions/workflows/build.yml)
@@ -10,8 +10,8 @@ Compile-time type-safe arguments for Jetpack Navigation Compose library. Based o
 
 Major features:
 
-- Complex types support, including nullability for primitive types - the only condition is that the type has to be serializable with KotlinX.Serializable library.
-- Based on official Kotlin Serialization compiler plugin - no slowdown with KSP nor KAPT.
+- Complex types' support, including nullability for primitive types - the only condition is that the type has to be serializable with KotlinX.Serializable library.
+- Based on official Kotlin Serialization compiler plugin - no slowdown with KSP or KAPT.
 - All Jetpack Navigation Compose features: e.g. `navigateUp()` after a deeplink preserves the top-level shared arguments.
 - Few simple functions, no new complex `NavHost` or `NavController` types; this allows covering other Jetpack Navigation Compose extensions.
 - Gradual integration, feel free to onboard just a part of your app.
@@ -109,7 +109,7 @@ private fun Home(
 
 ### Extensibility
 
-What about cooperation with Accompanist's `AnimatedNavHost` or `bottomSheet {}`? Do not worry. Basically, all this are just few simple functions. Create your own abstraction and use `createRoutePattern()`, `createNavArguments()`, `decodeArguments()` and `registerDestinationType()` functions.
+What about cooperation with Accompanist's `AnimatedNavHost` or `bottomSheet {}`? Do not worry. Basically, all these are just a few simple functions. Create your own abstraction and use `createRoutePattern()`, `createNavArguments()`, `decodeArguments()` and `registerDestinationType()` functions.
 
 ```kotlin
 import com.kiwi.navigationcompose.typed.createRoutePattern
@@ -135,6 +135,40 @@ private inline fun <reified T : Destination> NavGraphBuilder.bottomSheet(
 NavGraph {
 	bottomSheet<Destinations.Article> {
 		Article(id)
+	}
+}
+```
+
+### Result sharing
+
+Another set of functionality is provided to support the result sharing. First, define the destination as `ResultDestination` type and specify the result type class. Then open the screen as usual and utilize `ComposableResultEffect` or `DialogResultEffect` to observe the destination's result. To send the result, use
+`NavController`'s extension `setResult`.
+
+```kotlin
+import com.kiwi.navigationcompose.typed.Destination
+import com.kiwi.navigationcompose.typed.ResultDestination
+
+sealed interface Destinations : Destination {
+	@Serializable
+	object Dialog : Destinations, ResultDestination<Dialog.Result> {
+        @Serializable
+		data class Result(
+			val something: Int,
+		)
+	}
+}
+
+@Composable
+fun Host(navController: NavController) {
+    ComposableResultEffect(navController) { result: Destinations.Dialog.Result ->
+        println(result)
+        // process the result
+    }
+
+    Button(
+        onClick = { bavController.navigate(Destinations.Dialog) },
+    ) {
+        Text("Open")
 	}
 }
 ```

@@ -1,6 +1,7 @@
 package com.kiwi.navigationcompose.typed.demo
 
 import com.kiwi.navigationcompose.typed.Destination
+import com.kiwi.navigationcompose.typed.ResultDestination
 import kotlinx.serialization.Serializable
 
 internal sealed interface Destinations : Destination {
@@ -29,4 +30,21 @@ internal sealed interface HomeDestinations : Destination {
 		val stringOptional: String = "default",
 		val stringNullableOptional: String? = null,
 	) : HomeDestinations
+}
+
+internal sealed interface ProfileDestinations : Destination {
+	@Serializable
+	object Home : ProfileDestinations
+
+	@Serializable
+	object NameEditDialog : ProfileDestinations, ResultDestination<NameEditDialog.Result> {
+		@Serializable
+		data class Result(val name: String)
+	}
+
+	@Serializable
+	object NameEditScreen : ProfileDestinations, ResultDestination<NameEditScreen.Result> {
+		@Serializable
+		data class Result(val name: String)
+	}
 }
