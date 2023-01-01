@@ -4,7 +4,7 @@ Navigation Compose Typed
 Compile-time type-safe arguments for the Jetpack Navigation Compose library. Based on KotlinX.Serialization.
 
 [![Kiwi.com library](https://img.shields.io/badge/Kiwi.com-library-00A991)](https://code.kiwi.com)
-[![CI Build](https://img.shields.io/github/workflow/status/kiwicom/navigation-compose-typed/Build/main)](https://github.com/kiwicom/navigation-compose-typed/actions/workflows/build.yml)
+[![CI Build](https://img.shields.io/github/actions/workflow/status/kiwicom/navigation-compose-typed/build.yml?branch=main)](https://github.com/kiwicom/navigation-compose-typed/actions/workflows/build.yml)
 [![GitHub release](https://img.shields.io/github/v/release/kiwicom/navigation-compose-typed)](https://github.com/kiwicom/navigation-compose-typed/releases)
 [![Maven release](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fcom%2Fkiwi%2Fnavigation-compose%2Ftyped%2Fcore%2Fmaven-metadata.xml)](https://search.maven.org/search?q=g:com.kiwi.navigation-compose.typed)
 
