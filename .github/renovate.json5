@@ -16,18 +16,19 @@
       ],
     },
     {
-      "groupName": "Kotlin & Dokka",
-      "matchPackagePrefixes": [
-        "org.jetbrains.kotlin",
-        "org.jetbrains.dokka",
-      ],
-    },
-    {
       "groupName": "Compose & Accompanist",
       "matchPackageNames": [
         "androidx.compose",
         "com.google.accompanist",
       ],
-    }
+    },
+    {
+      "groupName": "Kotlin & Dokka & Compose Compiler",
+      "matchPackagePrefixes": [
+        "org.jetbrains.kotlin",
+        "org.jetbrains.dokka",
+        "androidx.compose.compiler",
+      ],
+    },
   ]
 }
