@@ -29,12 +29,12 @@ jobs:
         id: version_job
       - name: Commit and push files
         if: ${{ steps.version_job.outputs.changes_exist == 'true' }}
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.GH_ACTION_DEPLOY_PRIVATE_KEY }}"
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Bump version to ${{ steps.version_job.outputs.VERSION_NAME }}" -a
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          git push git@github.com:$GITHUB_REPOSITORY.git
