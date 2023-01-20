@@ -5,7 +5,7 @@ minSdk = "21"
 
 kotlin-lang = "1.8.0"
 androidGradlePlugin = "7.3.1"
-mavenPublish = "0.23.1"
+mavenPublish = "0.23.2"
 
 kotlin-serialization = "1.4.1"
 compose-compiler = "1.4.0"
