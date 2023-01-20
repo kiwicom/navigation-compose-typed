@@ -151,7 +151,7 @@ import com.kiwi.navigationcompose.typed.ResultDestination
 sealed interface Destinations : Destination {
 	@Serializable
 	object Dialog : Destinations, ResultDestination<Dialog.Result> {
-        @Serializable
+		@Serializable
 		data class Result(
 			val something: Int,
 		)
@@ -160,15 +160,15 @@ sealed interface Destinations : Destination {
 
 @Composable
 fun Host(navController: NavController) {
-    ComposableResultEffect(navController) { result: Destinations.Dialog.Result ->
-        println(result)
-        // process the result
-    }
+	ComposableResultEffect(navController) { result: Destinations.Dialog.Result ->
+		println(result)
+		// process the result
+	}
 
-    Button(
-        onClick = { bavController.navigate(Destinations.Dialog) },
-    ) {
-        Text("Open")
+	Button(
+		onClick = { bavController.navigate(Destinations.Dialog) },
+	) {
+		Text("Open")
 	}
 }
 ```
