@@ -1,4 +1,4 @@
-@file:Suppress("DSL_SCOPE_VIOLATION")
+@file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 plugins {
 	id("com.android.application")
@@ -65,6 +65,7 @@ dependencies {
 
 	implementation(libs.kotlin.stdlib)
 	implementation(libs.kotlin.serialization)
-	implementation(libs.compose.material)
+	implementation(libs.compose.material3)
 	implementation(libs.compose.navigation)
+	implementation(libs.accompanist.systemController)
 }
