@@ -1,9 +1,10 @@
 package com.kiwi.navigationcompose.typed.demo.screens
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +26,7 @@ internal fun NameEditScreen(navController: NavController) {
 	)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NameEdit(
 	onNameSave: (String) -> Unit,
