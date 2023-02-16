@@ -5,9 +5,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.kiwi.navigationcompose.typed.composable
 import com.kiwi.navigationcompose.typed.createRoutePattern
+import com.kiwi.navigationcompose.typed.demo.bottomsheet.BottomSheetHost
+import com.kiwi.navigationcompose.typed.demo.bottomsheet.BottomSheetNavigator
+import com.kiwi.navigationcompose.typed.demo.bottomsheet.bottomSheet
 import com.kiwi.navigationcompose.typed.demo.screens.Demo
 import com.kiwi.navigationcompose.typed.demo.screens.Home
 import com.kiwi.navigationcompose.typed.demo.screens.List
+import com.kiwi.navigationcompose.typed.demo.screens.NameEditBottomSheetDialog
 import com.kiwi.navigationcompose.typed.demo.screens.NameEditDialog
 import com.kiwi.navigationcompose.typed.demo.screens.NameEditScreen
 import com.kiwi.navigationcompose.typed.demo.screens.Profile
@@ -18,7 +22,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 @OptIn(ExperimentalSerializationApi::class)
 @Composable
-internal fun NavHost(navController: NavHostController) {
+internal fun NavHost(navController: NavHostController, bottomSheetNavigator: BottomSheetNavigator) {
 	NavHost(
 		navController = navController,
 		startDestination = createRoutePattern<Destinations.Home>(),
@@ -35,7 +39,11 @@ internal fun NavHost(navController: NavHostController) {
 		) {
 			composable<ProfileDestinations.Home> { Profile(navController) }
 			dialog<ProfileDestinations.NameEditDialog> { NameEditDialog(navController) }
+			bottomSheet<ProfileDestinations.NameEditBottomSheetDialog> {
+				NameEditBottomSheetDialog(navController)
+			}
 			composable<ProfileDestinations.NameEditScreen> { NameEditScreen(navController) }
 		}
 	}
+	BottomSheetHost(bottomSheetNavigator)
 }

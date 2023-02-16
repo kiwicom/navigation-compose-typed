@@ -17,6 +17,7 @@ compose-navigation = "2.5.3"
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin-lang" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 # compiler dependency is defined to help Renovabot update the version
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
 compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
 compose-material3 = { module = "androidx.compose.material3:material3", version = "1.1.0-alpha06" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }

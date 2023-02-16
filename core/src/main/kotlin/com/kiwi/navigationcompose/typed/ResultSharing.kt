@@ -62,7 +62,6 @@ public inline fun <T : ResultDestination<R>, reified R : Any> DialogResultEffect
 	navController: NavController,
 	noinline block: (R) -> Unit,
 ) {
-	@Suppress("RemoveExplicitTypeArguments")
 	ResultEffectImpl(
 		navController = navController,
 		currentRoute = currentRoutePattern,

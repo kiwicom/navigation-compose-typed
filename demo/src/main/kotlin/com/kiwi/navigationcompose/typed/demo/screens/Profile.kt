@@ -34,6 +34,13 @@ internal fun Profile(navController: NavController) {
 		name = "Dialog: ${result.name}"
 		times += 1
 	}
+	DialogResultEffect(
+		currentRoutePattern = createRoutePattern<ProfileDestinations.Home>(),
+		navController = navController,
+	) { result: ProfileDestinations.NameEditBottomSheetDialog.Result ->
+		name = "BottomSheetDialog: ${result.name}"
+		times += 1
+	}
 	ComposableResultEffect(navController) { result: ProfileDestinations.NameEditScreen.Result ->
 		name = "Screen: ${result.name}"
 		times += 1
@@ -62,6 +69,11 @@ private fun Profile(
 			onClick = { onNavigate(ProfileDestinations.NameEditDialog) },
 		) {
 			Text("Change Name Dialog")
+		}
+		OutlinedButton(
+			onClick = { onNavigate(ProfileDestinations.NameEditBottomSheetDialog) },
+		) {
+			Text("Change Name BottomSheet Dialog")
 		}
 		OutlinedButton(
 			onClick = { onNavigate(ProfileDestinations.NameEditScreen) },

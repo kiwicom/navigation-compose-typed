@@ -43,6 +43,12 @@ internal sealed interface ProfileDestinations : Destination {
 	}
 
 	@Serializable
+	object NameEditBottomSheetDialog : ProfileDestinations, ResultDestination<NameEditBottomSheetDialog.Result> {
+		@Serializable
+		data class Result(val name: String)
+	}
+
+	@Serializable
 	object NameEditScreen : ProfileDestinations, ResultDestination<NameEditScreen.Result> {
 		@Serializable
 		data class Result(val name: String)

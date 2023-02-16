@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kiwi.navigationcompose.typed.Destination
 import com.kiwi.navigationcompose.typed.createRoutePattern
+import com.kiwi.navigationcompose.typed.demo.bottomsheet.rememberBottomSheetNavigator
 import com.kiwi.navigationcompose.typed.navigate
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -44,14 +45,15 @@ public fun App() {
 			)
 		}
 
-		val navController = rememberNavController()
+		val bottomSheetNavigator = rememberBottomSheetNavigator()
+		val navController = rememberNavController(bottomSheetNavigator)
 		Scaffold(
 			bottomBar = {
 				BottomBar(navController)
 			},
 		) {
 			Box(Modifier.padding(it)) {
-				NavHost(navController)
+				NavHost(navController, bottomSheetNavigator)
 			}
 		}
 	}
