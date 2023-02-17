@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -101,10 +102,10 @@ private fun BottomBar(navController: NavHostController) {
 				selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
 				onClick = {
 					navController.navigate(item.destination) {
-						popUpTo(navController.graph.startDestinationId) {
+						popUpTo(navController.graph.findStartDestination().id) {
 							saveState = true
-							inclusive = true
 						}
+						launchSingleTop = true
 						restoreState = true
 					}
 				},
