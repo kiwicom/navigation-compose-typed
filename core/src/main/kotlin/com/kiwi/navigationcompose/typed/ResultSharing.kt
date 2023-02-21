@@ -82,7 +82,7 @@ public fun <R : Any> ResultEffectImpl(
 	resultSerializer: KSerializer<R>,
 	block: (R) -> Unit,
 ) {
-	DisposableEffect(navController, block) {
+	DisposableEffect(navController) {
 		// The implementation is based on the official documentation of the Result sharing.
 		// It takes into consideration the possibility of a dialog usage (see the docs).
 		// https://developer.android.com/guide/navigation/navigation-programmatic#additional_considerations
