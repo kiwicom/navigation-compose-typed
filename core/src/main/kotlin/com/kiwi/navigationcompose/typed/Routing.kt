@@ -1,9 +1,15 @@
 package com.kiwi.navigationcompose.typed
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import androidx.annotation.MainThread
+import androidx.core.net.toUri
+import androidx.navigation.NavDestination
 import com.kiwi.navigationcompose.typed.internal.addPolymorphicType
 import com.kiwi.navigationcompose.typed.internal.createRouteSlug
 import com.kiwi.navigationcompose.typed.internal.isNavTypeOptional
+import com.kiwi.navigationcompose.typed.internal.toRoute
 import kotlin.reflect.KClass
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -74,3 +80,26 @@ public fun <T : Destination> createRoutePattern(serializer: KSerializer<T>): Str
 
 	return destination + path.toString() + query.toString()
 }
+
+/**
+ * Converts the destination into a deeplink [Uri].
+ *
+ * The most typical usage would be in construction of an [Intent].
+ * Such intent can then be used to open the destination from anywhere, e.g. notification.
+ *
+ *  ```
+ * fun onArticleClick(id: Int) {
+ *     context.startActivity(
+ *         Intent(
+ *             Intent.ACTION_VIEW,
+ *             Destinations.Article(id).toDeepLinkUri()
+ *         )
+ *     )
+ * )
+ * ```
+ */
+@SuppressLint("RestrictedApi")
+@ExperimentalSerializationApi
+@MainThread
+public fun <T : Destination> T.toDeepLinkUri(): Uri =
+	NavDestination.createRoute(this.toRoute()).toUri()
