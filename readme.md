@@ -22,11 +22,11 @@ Add this library dependency and KotlinX.Serialization support
 
 ```kotlin
 plugins {
-	id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
+	id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
 }
 dependencies {
 	implementation("com.kiwi.navigation-compose.typed:core:<version>")
-	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0")
 }
 ```
 

@@ -31,7 +31,6 @@ public inline fun <T : ResultDestination<R>, reified R : Any> ComposableResultEf
 	navController: NavController,
 	noinline block: (R) -> Unit,
 ) {
-	@Suppress("RemoveExplicitTypeArguments")
 	ResultEffectImpl(
 		navController = navController,
 		currentRoute = navController.currentDestination!!.route!!,
@@ -62,7 +61,6 @@ public inline fun <T : ResultDestination<R>, reified R : Any> DialogResultEffect
 	navController: NavController,
 	noinline block: (R) -> Unit,
 ) {
-	@Suppress("RemoveExplicitTypeArguments")
 	ResultEffectImpl(
 		navController = navController,
 		currentRoute = currentRoutePattern,
@@ -108,7 +106,7 @@ public fun <R : Any> ResultEffectImpl(
  * The result type has to be KotlinX Serializable.
  */
 @ExperimentalSerializationApi
-@Suppress("unused") // T generic parameter is a typecheck for R being the type from ResultDestination
+@Suppress("unused") // generic parameter T  is a type-check for R being a ResultDestination's type
 public inline fun <T : ResultDestination<R>, reified R : Any> NavController.setResult(
 	data: R,
 ) {
