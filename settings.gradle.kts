@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 rootProject.name = "NavigationComposeTyped"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
@@ -20,6 +22,13 @@ pluginManagement {
             google()
         }
     }
+}
+
+dependencyResolutionManagement {
+	repositories {
+		google()
+		mavenCentral()
+	}
 }
 
 include(":core")

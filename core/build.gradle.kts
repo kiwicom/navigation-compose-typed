@@ -1,11 +1,11 @@
-@file:Suppress("DSL_SCOPE_VIOLATION")
+@file:Suppress("UnstableApiUsage")
 
 plugins {
 	id("com.android.library")
-	alias(libs.plugins.kotlin.android)
-	alias(libs.plugins.mavenPublish)
-	alias(libs.plugins.kotlinter)
-	alias(libs.plugins.kotlin.serialization)
+	id("org.jetbrains.kotlin.android")
+	id("org.jetbrains.kotlin.plugin.serialization")
+	id("com.vanniktech.maven.publish.base")
+	id("org.jmailen.kotlinter")
 }
 
 android {
@@ -29,7 +29,7 @@ android {
 	}
 
 	composeOptions {
-		kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+		kotlinCompilerExtensionVersion = libs.compose.compiler.get().version
 	}
 
 	kotlinOptions {

@@ -1,34 +1,23 @@
-@file:Suppress("DSL_SCOPE_VIOLATION")
-
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import com.vanniktech.maven.publish.SonatypeHost
 import java.util.Properties
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-	alias(libs.plugins.kotlin.jvm) apply false
-	alias(libs.plugins.kotlin.android) apply false
-	alias(libs.plugins.kotlin.serialization) apply false
-	alias(libs.plugins.agp.application) apply false
-	alias(libs.plugins.kotlinter) apply false
-	alias(libs.plugins.mavenPublish) apply false
+	id("org.jetbrains.kotlin.android") version "1.8.10" apply false
+	id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10" apply false
+	id("org.jmailen.kotlinter") version "3.13.0" apply false
+	id("com.android.application") version "7.4.2" apply false
+	id("com.vanniktech.maven.publish.base") version "0.24.0" apply false
 }
 
 subprojects {
-	repositories {
-		google()
-		mavenCentral()
-		maven { url = uri("https://kotlin.bintray.com/kotlinx/") }
-	}
-
-	tasks.withType<KotlinCompile>().configureEach {
-		kotlinOptions {
-			jvmTarget = "1.8"
-			allWarningsAsErrors = true
-			freeCompilerArgs = freeCompilerArgs.toMutableList().apply {
-				add("-Xskip-prerelease-check")
-			}.toList()
+	tasks.withType<KotlinJvmCompile>().configureEach {
+		compilerOptions {
+			jvmTarget.set(JvmTarget.JVM_1_8)
+			allWarningsAsErrors.set(true)
 		}
 	}
 
