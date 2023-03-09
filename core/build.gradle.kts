@@ -53,7 +53,7 @@ kotlinter {
 dependencies {
 	implementation(libs.kotlin.stdlib)
 	implementation(libs.kotlin.serialization)
-	implementation(libs.compose.navigation)
+	implementation(libs.navigation.compose)
 
 	testImplementation(libs.junit)
 	testImplementation(libs.roboletric)

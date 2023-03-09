@@ -63,8 +63,11 @@ kotlinter {
 dependencies {
 	implementation(projects.core)
 
+	implementation(platform(libs.compose.bom))
+
 	implementation(libs.kotlin.stdlib)
 	implementation(libs.kotlin.serialization)
-	implementation(libs.compose.material)
-	implementation(libs.compose.navigation)
+	implementation(libs.compose.material3)
+	implementation(libs.navigation.compose)
+	implementation(libs.accompanist.systemController)
 }
