@@ -10,7 +10,7 @@ kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-j
 # compiler dependency is defined to help Renovabot update the version
 accompanist-systemController = { module = "com.google.accompanist:accompanist-systemuicontroller", version = "0.29.1-alpha" }
 compose-bom = { module = "dev.chrisbanes.compose:compose-bom", version = "2023.02.00-rc02" }
-compose-compiler = { module = "androidx.compose.compiler:compiler", version = "1.4.3" }
+compose-compiler = { module = "androidx.compose.compiler:compiler", version = "1.4.4" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version = "2.5.3" }
 junit = { module = "junit:junit", version = "4.13.2" }
