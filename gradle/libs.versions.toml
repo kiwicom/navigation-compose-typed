@@ -8,7 +8,7 @@ minSdk = "21"
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version = "1.8.10" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.5.0" }
 # compiler dependency is defined to help Renovabot update the version
-accompanist-systemController = { module = "com.google.accompanist:accompanist-systemuicontroller", version = "0.30.0" }
+accompanist-systemController = { module = "com.google.accompanist:accompanist-systemuicontroller", version = "0.30.1" }
 compose-bom = { module = "dev.chrisbanes.compose:compose-bom", version = "2023.03.00" }
 compose-compiler = { module = "androidx.compose.compiler:compiler", version = "1.4.4" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
