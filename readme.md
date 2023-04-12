@@ -166,7 +166,7 @@ fun Host(navController: NavController) {
 	}
 
 	Button(
-		onClick = { bavController.navigate(Destinations.Dialog) },
+		onClick = { navController.navigate(Destinations.Dialog) },
 	) {
 		Text("Open")
 	}
