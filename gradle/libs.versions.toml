@@ -14,4 +14,4 @@ compose-compiler = { module = "androidx.compose.compiler:compiler", version = "1
 compose-material3 = { module = "androidx.compose.material3:material3" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version = "2.5.3" }
 junit = { module = "junit:junit", version = "4.13.2" }
-roboletric = { module = "org.robolectric:robolectric", version = "4.10" }
+roboletric = { module = "org.robolectric:robolectric", version = "4.10.2" }
