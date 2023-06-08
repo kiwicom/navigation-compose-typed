@@ -16,6 +16,10 @@ Major features:
 - Few simple functions, no new complex `NavHost` or `NavController` types; this allows covering other Jetpack Navigation Compose extensions.
 - Gradual integration, feel free to onboard just a part of your app.
 
+Watch the talk about this library and its implementation details:
+
+[![Watch the video](https://img.youtube.com/vi/bXuiYvGFbvs/default.jpg)](https://youtu.be/bXuiYvGFbvs)
+
 ### QuickStart
 
 Add this library dependency and KotlinX.Serialization support
