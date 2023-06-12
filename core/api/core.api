@@ -1,0 +1,34 @@
+public abstract interface class com/kiwi/navigationcompose/typed/Destination {
+}
+
+public final class com/kiwi/navigationcompose/typed/NavBuilderKt {
+	public static final fun composable (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Lkotlin/jvm/functions/Function4;)V
+	public static synthetic fun composable$default (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Lkotlin/jvm/functions/Function4;ILjava/lang/Object;)V
+	public static final fun createNavArguments (Lkotlinx/serialization/KSerializer;)Ljava/util/List;
+	public static final fun decodeArguments (Lkotlinx/serialization/KSerializer;Landroidx/navigation/NavBackStackEntry;)Lcom/kiwi/navigationcompose/typed/Destination;
+	public static final fun dialog (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Lkotlin/jvm/functions/Function4;)V
+	public static synthetic fun dialog$default (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Lkotlin/jvm/functions/Function4;ILjava/lang/Object;)V
+	public static final fun navigation (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun navigation$default (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class com/kiwi/navigationcompose/typed/NavControllerKt {
+	public static final fun navigate (Landroidx/navigation/NavController;Lcom/kiwi/navigationcompose/typed/Destination;Landroidx/navigation/NavOptions;Landroidx/navigation/Navigator$Extras;)V
+	public static final fun navigate (Landroidx/navigation/NavController;Lcom/kiwi/navigationcompose/typed/Destination;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun navigate$default (Landroidx/navigation/NavController;Lcom/kiwi/navigationcompose/typed/Destination;Landroidx/navigation/NavOptions;Landroidx/navigation/Navigator$Extras;ILjava/lang/Object;)V
+}
+
+public abstract interface class com/kiwi/navigationcompose/typed/ResultDestination : com/kiwi/navigationcompose/typed/Destination {
+}
+
+public final class com/kiwi/navigationcompose/typed/ResultSharingKt {
+	public static final fun ResultEffectImpl (Landroidx/navigation/NavController;Ljava/lang/String;Lkotlinx/serialization/KSerializer;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun setResultImpl (Landroidx/navigation/NavController;Lkotlinx/serialization/KSerializer;Ljava/lang/Object;)V
+}
+
+public final class com/kiwi/navigationcompose/typed/RoutingKt {
+	public static final fun createRoutePattern (Lkotlinx/serialization/KSerializer;)Ljava/lang/String;
+	public static final fun registerDestinationType (Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;)V
+	public static final fun toDeepLinkUri (Lcom/kiwi/navigationcompose/typed/Destination;)Landroid/net/Uri;
+}
+
