@@ -113,7 +113,7 @@ private fun Home(
 
 ### Extensibility
 
-What about cooperation with Accompanist's `AnimatedNavHost` or `bottomSheet {}`? Do not worry. Basically, all these are just a few simple functions. Create your own abstraction and use `createRoutePattern()`, `createNavArguments()`, `decodeArguments()` and `registerDestinationType()` functions.
+What about cooperation with Accompanist's Material `bottomSheet {}` integration? Do not worry. Basically, all the functionality is just a few simple functions. Create your own abstraction and use `createRoutePattern()`, `createNavArguments()`, `decodeArguments()` and `registerDestinationType()` functions.
 
 ```kotlin
 import com.kiwi.navigationcompose.typed.createRoutePattern
