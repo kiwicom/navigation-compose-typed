@@ -18,7 +18,10 @@ jobs:
           distribution: 'zulu'
           java-version: 18
       - name: Assemble & Linters
-        run: ./gradlew :core:testDebugUnitTest :demo:assembleDebug lint lintKotlin
+        run: |
+          ./gradlew :core:apiCheck
+          ./gradlew :core:testDebugUnitTest
+          ./gradlew lint lintKotlin :demo:assembleDebug
       - uses: yutailang0119/action-android-lint@v3.1.0
         name: App Lint errors to annotations
         if: ${{ failure() }}

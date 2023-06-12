@@ -73,8 +73,9 @@ public inline fun <T : ResultDestination<R>, reified R : Any> DialogResultEffect
  * Implementation of ResultEffect. Use [ComposableResultEffect] or [DialogResultEffect] directly.
  */
 @ExperimentalSerializationApi
+@PublishedApi
 @Composable
-public fun <R : Any> ResultEffectImpl(
+internal fun <R : Any> ResultEffectImpl(
 	navController: NavController,
 	currentRoute: String,
 	resultSerializer: KSerializer<R>,
@@ -114,7 +115,8 @@ public inline fun <T : ResultDestination<R>, reified R : Any> NavController.setR
 }
 
 @ExperimentalSerializationApi
-public fun <R : Any> NavController.setResultImpl(
+@PublishedApi
+internal fun <R : Any> NavController.setResultImpl(
 	serializer: KSerializer<R>,
 	data: R,
 ) {
