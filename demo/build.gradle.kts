@@ -15,7 +15,7 @@ android {
 	defaultConfig {
 		applicationId = "com.kiwi.navigationcompose.typed.demo"
 		minSdk = 26
-		targetSdk = 33
+		targetSdk = 34
 		versionName = "1.0.0"
 		versionCode = 1
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
