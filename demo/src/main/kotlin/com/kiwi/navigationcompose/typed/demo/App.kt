@@ -66,7 +66,7 @@ private data class Item(
 )
 
 @OptIn(ExperimentalSerializationApi::class)
-private val items = listOf(
+private val Items = listOf(
 	Item(
 		0,
 		"Home",
@@ -97,7 +97,7 @@ private fun BottomBar(navController: NavHostController) {
 	val currentDestination = navBackStackEntry?.destination
 
 	NavigationBar {
-		items.forEach { item ->
+		Items.forEach { item ->
 			NavigationBarItem(
 				selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
 				onClick = {
