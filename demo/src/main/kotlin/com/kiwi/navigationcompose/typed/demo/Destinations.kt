@@ -6,18 +6,18 @@ import kotlinx.serialization.Serializable
 
 internal sealed interface Destinations : Destination {
 	@Serializable
-	object Home : Destinations
+	data object Home : Destinations
 
 	@Serializable
-	object List : Destinations
+	data object List : Destinations
 
 	@Serializable
-	object Profile : Destinations
+	data object Profile : Destinations
 }
 
 internal sealed interface HomeDestinations : Destination {
 	@Serializable
-	object Home : HomeDestinations
+	data object Home : HomeDestinations
 
 	@Serializable
 	data class Demo(
@@ -34,16 +34,16 @@ internal sealed interface HomeDestinations : Destination {
 
 internal sealed interface ProfileDestinations : Destination {
 	@Serializable
-	object Home : ProfileDestinations
+	data object Home : ProfileDestinations
 
 	@Serializable
-	object NameEditDialog : ProfileDestinations, ResultDestination<NameEditDialog.Result> {
+	data object NameEditDialog : ProfileDestinations, ResultDestination<NameEditDialog.Result> {
 		@Serializable
 		data class Result(val name: String)
 	}
 
 	@Serializable
-	object NameEditScreen : ProfileDestinations, ResultDestination<NameEditScreen.Result> {
+	data object NameEditScreen : ProfileDestinations, ResultDestination<NameEditScreen.Result> {
 		@Serializable
 		data class Result(val name: String)
 	}

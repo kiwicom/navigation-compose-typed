@@ -11,7 +11,7 @@ Compile-time type-safe arguments for the Jetpack Navigation Compose library. Bas
 Major features:
 
 - Complex types' support, including nullability for primitive types - the only condition is that the type has to be serializable with KotlinX.Serializable library.
-- Based on official Kotlin Serialization compiler plugin - no slowdown with KSP or KAPT.
+- Based on the official Kotlin Serialization compiler plugin - no slowdown with KSP or KAPT.
 - All Jetpack Navigation Compose features: e.g. `navigateUp()` after a deeplink preserves the top-level shared arguments.
 - Few simple functions, no new complex `NavHost` or `NavController` types; this allows covering other Jetpack Navigation Compose extensions.
 - Gradual integration, feel free to onboard just a part of your app.
@@ -45,7 +45,7 @@ import com.kiwi.navigationcompose.typed.Destination
 
 sealed interface Destinations : Destination {
 	@Serializable
-	object Home : Destinations
+	data object Home : Destinations
 
 	@Serializable
 	data class Article(
@@ -154,7 +154,7 @@ import com.kiwi.navigationcompose.typed.ResultDestination
 
 sealed interface Destinations : Destination {
 	@Serializable
-	object Dialog : Destinations, ResultDestination<Dialog.Result> {
+	data object Dialog : Destinations, ResultDestination<Dialog.Result> {
 		@Serializable
 		data class Result(
 			val something: Int,

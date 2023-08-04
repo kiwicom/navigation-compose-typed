@@ -1,7 +1,6 @@
 package com.kiwi.navigationcompose.typed.demo.screens
 
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -27,7 +26,6 @@ internal fun NameEditDialog(navController: NavController) {
 	)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NameEdit(
 	onNameSave: (String) -> Unit,
