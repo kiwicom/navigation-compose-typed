@@ -1,6 +1,6 @@
 [versions]
 
-compileSdk = "33"
+compileSdk = "34"
 minSdk = "21"
 
 [libraries]
