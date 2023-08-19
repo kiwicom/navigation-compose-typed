@@ -2,6 +2,9 @@ package com.kiwi.navigationcompose.typed
 
 import android.os.Bundle
 import androidx.annotation.MainThread
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
@@ -44,12 +47,20 @@ import kotlinx.serialization.serializer
 @MainThread
 public inline fun <reified T : Destination> NavGraphBuilder.composable(
 	deepLinks: List<NavDeepLink> = emptyList(),
+	noinline enterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
+	noinline exitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
+	noinline popEnterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
+	noinline popExitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
 	noinline content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
 	composable(
 		kClass = T::class,
 		serializer = serializer(),
 		deepLinks = deepLinks,
+		enterTransition = enterTransition,
+		exitTransition = exitTransition,
+		popEnterTransition = popEnterTransition,
+		popExitTransition = popExitTransition,
 		content = content,
 	)
 }
@@ -66,12 +77,20 @@ public fun <T : Destination> NavGraphBuilder.composable(
 	kClass: KClass<T>,
 	serializer: KSerializer<T>,
 	deepLinks: List<NavDeepLink> = emptyList(),
+	enterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
+	exitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
+	popEnterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
+	popExitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
 	content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
 	registerDestinationType(kClass, serializer)
 	composable(
 		route = createRoutePattern(serializer),
 		arguments = createNavArguments(serializer),
+		enterTransition = enterTransition,
+		exitTransition = exitTransition,
+		popEnterTransition = popEnterTransition,
+		popExitTransition = popExitTransition,
 		deepLinks = deepLinks,
 	) { navBackStackEntry ->
 		decodeArguments(serializer, navBackStackEntry).content(navBackStackEntry)
@@ -163,6 +182,10 @@ public fun <T : Destination> NavGraphBuilder.dialog(
 public inline fun <reified T : Destination> NavGraphBuilder.navigation(
 	startDestination: String,
 	deepLinks: List<NavDeepLink> = emptyList(),
+	noinline enterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
+	noinline exitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
+	noinline popEnterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
+	noinline popExitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
 	noinline builder: NavGraphBuilder.() -> Unit,
 ) {
 	navigation(
@@ -170,6 +193,10 @@ public inline fun <reified T : Destination> NavGraphBuilder.navigation(
 		serializer = serializer(),
 		startDestination = startDestination,
 		deepLinks = deepLinks,
+		enterTransition = enterTransition,
+		exitTransition = exitTransition,
+		popEnterTransition = popEnterTransition,
+		popExitTransition = popExitTransition,
 		builder = builder,
 	)
 }
@@ -189,6 +216,10 @@ public fun <T : Destination> NavGraphBuilder.navigation(
 	serializer: KSerializer<T>,
 	startDestination: String,
 	deepLinks: List<NavDeepLink> = emptyList(),
+	enterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
+	exitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
+	popEnterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
+	popExitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
 	builder: NavGraphBuilder.() -> Unit,
 ) {
 	registerDestinationType(kClass, serializer)
@@ -197,6 +228,10 @@ public fun <T : Destination> NavGraphBuilder.navigation(
 		route = createRoutePattern(serializer),
 		arguments = createNavArguments(serializer),
 		deepLinks = deepLinks,
+		enterTransition = enterTransition,
+		exitTransition = exitTransition,
+		popEnterTransition = popEnterTransition,
+		popExitTransition = popExitTransition,
 		builder = builder,
 	)
 }
@@ -232,4 +267,49 @@ public fun <T : Destination> decodeArguments(
 	// and it is a start destination.
 	val decoder = UriBundleDecoder(navBackStackEntry.arguments ?: Bundle())
 	return decoder.decodeSerializableValue(serializer)
+}
+
+@Deprecated(
+	"Deprecated in favor of navigation builder that supports AnimatedContent",
+	level = DeprecationLevel.HIDDEN,
+)
+@ExperimentalSerializationApi
+@MainThread
+public fun <T : Destination> NavGraphBuilder.composable(
+	kClass: KClass<T>,
+	serializer: KSerializer<T>,
+	deepLinks: List<NavDeepLink> = emptyList(),
+	content: @Composable T.(NavBackStackEntry) -> Unit,
+) {
+	registerDestinationType(kClass, serializer)
+	composable(
+		route = createRoutePattern(serializer),
+		arguments = createNavArguments(serializer),
+		deepLinks = deepLinks,
+	) { navBackStackEntry ->
+		decodeArguments(serializer, navBackStackEntry).content(navBackStackEntry)
+	}
+}
+
+@Deprecated(
+	"Deprecated in favor of navigation builder that supports AnimatedContent",
+	level = DeprecationLevel.HIDDEN,
+)
+@ExperimentalSerializationApi
+@MainThread
+public fun <T : Destination> NavGraphBuilder.navigation(
+	kClass: KClass<T>,
+	serializer: KSerializer<T>,
+	startDestination: String,
+	deepLinks: List<NavDeepLink> = emptyList(),
+	builder: NavGraphBuilder.() -> Unit,
+) {
+	registerDestinationType(kClass, serializer)
+	navigation(
+		startDestination = startDestination,
+		route = createRoutePattern(serializer),
+		arguments = createNavArguments(serializer),
+		deepLinks = deepLinks,
+		builder = builder,
+	)
 }
