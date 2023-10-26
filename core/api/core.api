@@ -26,8 +26,8 @@ public abstract interface class com/kiwi/navigationcompose/typed/ResultDestinati
 }
 
 public final class com/kiwi/navigationcompose/typed/ResultSharingKt {
-	public static final fun ResultEffectImpl (Landroidx/navigation/NavController;Ljava/lang/String;Lkotlinx/serialization/KSerializer;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
-	public static final fun setResultImpl (Landroidx/navigation/NavController;Lkotlinx/serialization/KSerializer;Ljava/lang/Object;)V
+	public static final fun ResultEffectImpl (Landroidx/navigation/NavController;Ljava/lang/String;Lkotlinx/serialization/KSerializer;Lkotlinx/serialization/KSerializer;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun setResultImpl (Landroidx/navigation/NavController;Lkotlinx/serialization/KSerializer;Lkotlinx/serialization/KSerializer;Ljava/lang/Object;)V
 }
 
 public final class com/kiwi/navigationcompose/typed/RoutingKt {

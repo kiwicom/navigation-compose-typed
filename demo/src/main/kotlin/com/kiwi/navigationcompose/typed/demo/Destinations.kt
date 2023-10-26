@@ -45,6 +45,12 @@ internal sealed interface ProfileDestinations : Destination {
 	@Serializable
 	data object NameEditScreen : ProfileDestinations, ResultDestination<NameEditScreen.Result> {
 		@Serializable
-		data class Result(val name: String)
+		sealed interface Result {
+			@Serializable
+			data class Success(val name: String) : Result
+
+			@Serializable
+			data object Cancelled : Result
+		}
 	}
 }
