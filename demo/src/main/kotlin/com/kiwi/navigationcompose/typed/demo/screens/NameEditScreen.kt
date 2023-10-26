@@ -19,7 +19,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 internal fun NameEditScreen(navController: NavController) {
 	NameEdit(
 		onNameSave = { name ->
-			navController.setResult(ProfileDestinations.NameEditScreen.Result.Success(name))
+			navController.setResult(ProfileDestinations.NameEditScreen.Result(name))
 			navController.navigateUp()
 		},
 	)
