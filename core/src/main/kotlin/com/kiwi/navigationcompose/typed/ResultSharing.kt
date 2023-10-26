@@ -27,13 +27,14 @@ import kotlinx.serialization.serializer
 @Suppress("unused") // T generic parameter is a typecheck for R being the type from ResultDestination
 @ExperimentalSerializationApi
 @Composable
-public inline fun <T : ResultDestination<R>, reified R : Any> ComposableResultEffect(
+public inline fun <reified T : ResultDestination<R>, reified R : Any> ComposableResultEffect(
 	navController: NavController,
 	noinline block: (R) -> Unit,
 ) {
 	ResultEffectImpl(
 		navController = navController,
 		currentRoute = navController.currentDestination!!.route!!,
+		destinationSerializer = serializer<T>(),
 		resultSerializer = serializer<R>(),
 		block = block,
 	)
@@ -56,7 +57,7 @@ public inline fun <T : ResultDestination<R>, reified R : Any> ComposableResultEf
 @Suppress("unused") // T generic parameter is a typecheck for R being the type from ResultDestination
 @ExperimentalSerializationApi
 @Composable
-public inline fun <T : ResultDestination<R>, reified R : Any> DialogResultEffect(
+public inline fun <reified T : ResultDestination<R>, reified R : Any> DialogResultEffect(
 	currentRoutePattern: String,
 	navController: NavController,
 	noinline block: (R) -> Unit,
@@ -64,6 +65,7 @@ public inline fun <T : ResultDestination<R>, reified R : Any> DialogResultEffect
 	ResultEffectImpl(
 		navController = navController,
 		currentRoute = currentRoutePattern,
+		destinationSerializer = serializer<T>(),
 		resultSerializer = serializer<R>(),
 		block = block,
 	)
@@ -75,9 +77,10 @@ public inline fun <T : ResultDestination<R>, reified R : Any> DialogResultEffect
 @ExperimentalSerializationApi
 @PublishedApi
 @Composable
-internal fun <R : Any> ResultEffectImpl(
+internal fun <T : ResultDestination<R>, R : Any> ResultEffectImpl(
 	navController: NavController,
 	currentRoute: String,
+	destinationSerializer: KSerializer<T>,
 	resultSerializer: KSerializer<R>,
 	block: (R) -> Unit,
 ) {
@@ -85,7 +88,7 @@ internal fun <R : Any> ResultEffectImpl(
 		// The implementation is based on the official documentation of the Result sharing.
 		// It takes into consideration the possibility of a dialog usage (see the docs).
 		// https://developer.android.com/guide/navigation/navigation-programmatic#additional_considerations
-		val resultKey = resultSerializer.descriptor.serialName + "_result"
+		val resultKey = destinationSerializer.descriptor.serialName + "_result"
 		val backStackEntry = navController.getBackStackEntry(currentRoute)
 		val observer = LifecycleEventObserver { _, event ->
 			if (event == Lifecycle.Event.ON_RESUME && backStackEntry.savedStateHandle.contains(resultKey)) {
@@ -108,19 +111,23 @@ internal fun <R : Any> ResultEffectImpl(
  */
 @ExperimentalSerializationApi
 @Suppress("unused") // generic parameter T  is a type-check for R being a ResultDestination's type
-public inline fun <T : ResultDestination<R>, reified R : Any> NavController.setResult(
+public inline fun <reified T : ResultDestination<R>, reified R : Any> NavController.setResult(
 	data: R,
 ) {
-	setResultImpl(serializer(), data)
+	setResultImpl(serializer<T>(), serializer<R>(), data)
 }
 
 @ExperimentalSerializationApi
 @PublishedApi
-internal fun <R : Any> NavController.setResultImpl(
+internal fun <T : ResultDestination<R>, R : Any> NavController.setResultImpl(
+	destinationSerializer: KSerializer<T>,
 	serializer: KSerializer<R>,
 	data: R,
 ) {
+	// ResultDestination's serializer is used to identify the "key" in the map instead of Result's serializer.
+	// This is to avoid issues with polymorphic result types -> setting a result with Result.Success would
+	// generate a different key in comparison to just Result type used on the observation side.
+	val resultKey = destinationSerializer.descriptor.serialName + "_result"
 	val result = Json.encodeToString(serializer, data)
-	val resultKey = serializer.descriptor.serialName + "_result"
 	previousBackStackEntry?.savedStateHandle?.set(resultKey, result)
 }
