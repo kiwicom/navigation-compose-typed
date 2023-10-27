@@ -20,9 +20,9 @@ internal fun NameEditDialog(navController: NavController) {
 	NameEdit(
 		onNameSave = { name ->
 			navController.setResult(ProfileDestinations.NameEditDialog.Result(name))
-			navController.navigateUp()
+			navController.popBackStack()
 		},
-		onDismiss = navController::navigateUp,
+		onDismiss = navController::popBackStack,
 	)
 }
 
