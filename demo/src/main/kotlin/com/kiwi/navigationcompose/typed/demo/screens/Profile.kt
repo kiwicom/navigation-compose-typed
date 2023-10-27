@@ -36,10 +36,8 @@ internal fun Profile(navController: NavController) {
 		times += 1
 	}
 	ComposableResultEffect(navController) { result: ProfileDestinations.NameEditScreen.Result ->
-		if (result is ProfileDestinations.NameEditScreen.Result.Success) {
-			name = "Screen: ${result.name}"
-			times += 1
-		}
+		name = "Screen: ${result.name}"
+		times += 1
 	}
 
 	Profile(name, times, navController::navigate)
