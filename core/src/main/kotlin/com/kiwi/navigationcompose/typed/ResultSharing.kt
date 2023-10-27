@@ -2,9 +2,14 @@ package com.kiwi.navigationcompose.typed
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
@@ -31,9 +36,23 @@ public inline fun <reified T : ResultDestination<R>, reified R : Any> Composable
 	navController: NavController,
 	noinline block: (R) -> Unit,
 ) {
+	// The async waiting workarounds situations when navController.currentBackStackEntry is null
+	// ~ not yet populated.
+	val currentDestinationState = remember(navController) {
+		mutableStateOf(navController.currentDestination)
+	}
+	val currentDestination = currentDestinationState.value
+	if (currentDestination == null) {
+		LaunchedEffect(navController) {
+			val currentBackStackEntry = navController.currentBackStackEntryFlow.filterNotNull().first()
+			currentDestinationState.value = currentBackStackEntry.destination
+		}
+		return
+	}
+
 	ResultEffectImpl(
 		navController = navController,
-		currentRoute = navController.currentDestination!!.route!!,
+		currentRoute = currentDestination.route!!, // routes are always not null in Nav Compose
 		destinationSerializer = serializer<T>(),
 		resultSerializer = serializer<R>(),
 		block = block,
