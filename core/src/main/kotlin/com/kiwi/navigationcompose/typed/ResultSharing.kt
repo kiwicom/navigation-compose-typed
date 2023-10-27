@@ -29,10 +29,9 @@ import kotlinx.serialization.serializer
  * }
  * ```
  */
-@Suppress("unused") // T generic parameter is a typecheck for R being the type from ResultDestination
 @ExperimentalSerializationApi
 @Composable
-public inline fun <T : ResultDestination<R>, reified R : Any> ComposableResultEffect(
+public inline fun <reified R : Any> ComposableResultEffect(
 	navController: NavController,
 	noinline block: (R) -> Unit,
 ) {
@@ -72,10 +71,9 @@ public inline fun <T : ResultDestination<R>, reified R : Any> ComposableResultEf
  * ) { result: Destinations.Dialog.Result ->
  * ```
  */
-@Suppress("unused") // T generic parameter is a typecheck for R being the type from ResultDestination
 @ExperimentalSerializationApi
 @Composable
-public inline fun <T : ResultDestination<R>, reified R : Any> DialogResultEffect(
+public inline fun <reified R : Any> DialogResultEffect(
 	currentRoutePattern: String,
 	navController: NavController,
 	noinline block: (R) -> Unit,
@@ -126,8 +124,7 @@ internal fun <R : Any> ResultEffectImpl(
  * The result type has to be KotlinX Serializable.
  */
 @ExperimentalSerializationApi
-@Suppress("unused") // generic parameter T  is a type-check for R being a ResultDestination's type
-public inline fun <T : ResultDestination<R>, reified R : Any> NavController.setResult(
+public inline fun <reified R : Any> NavController.setResult(
 	data: R,
 ) {
 	setResultImpl(serializer(), data)
