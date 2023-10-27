@@ -150,7 +150,9 @@ Another set of functionality is provided to support the result sharing. First, d
 
 ```kotlin
 import com.kiwi.navigationcompose.typed.Destination
+import com.kiwi.navigationcompose.typed.DialogResultEffect
 import com.kiwi.navigationcompose.typed.ResultDestination
+import com.kiwi.navigationcompose.typed.setResult
 
 sealed interface Destinations : Destination {
 	@Serializable
@@ -164,7 +166,7 @@ sealed interface Destinations : Destination {
 
 @Composable
 fun Host(navController: NavController) {
-	ComposableResultEffect(navController) { result: Destinations.Dialog.Result ->
+	DialogResultEffect(navController) { result: Destinations.Dialog.Result ->
 		println(result)
 		// process the result
 	}
@@ -173,6 +175,18 @@ fun Host(navController: NavController) {
 		onClick = { navController.navigate(Destinations.Dialog) },
 	) {
 		Text("Open")
+	}
+}
+
+@Composable
+fun Dialog(navController: NavController) {
+	Button(
+		onClick = {
+			navController.setResult(Destinations.Dialog.Result(something = 42))
+			navController.popBackStack()
+		}
+	) {
+		Text("Set and close")
 	}
 }
 ```
