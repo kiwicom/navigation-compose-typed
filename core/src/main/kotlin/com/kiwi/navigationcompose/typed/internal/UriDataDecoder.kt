@@ -1,6 +1,5 @@
 package com.kiwi.navigationcompose.typed.internal
 
-import android.os.Bundle
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -10,13 +9,13 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 
 @ExperimentalSerializationApi
-internal class UriBundleDecoder(
-	private val bundle: Bundle,
+internal class UriDataDecoder(
+	private val data: UriDataMap,
 ) : AbstractDecoder() {
 	override val serializersModule: SerializersModule by lazy { getSerializersModule() }
 
 	private val json by lazy {
-		Json { serializersModule = this@UriBundleDecoder.serializersModule }
+		Json { serializersModule = this@UriDataDecoder.serializersModule }
 	}
 
 	private var root = true
@@ -36,7 +35,7 @@ internal class UriBundleDecoder(
 		while (elementIndex < elementsCount) {
 			elementName = descriptor.getElementName(elementIndex)
 			elementIndex++
-			if (bundle.containsKey(elementName)) {
+			if (data.contains(elementName)) {
 				return elementIndex - 1
 			}
 		}
@@ -44,24 +43,24 @@ internal class UriBundleDecoder(
 	}
 
 	override fun decodeNotNullMark(): Boolean =
-		bundle.containsKey(elementName) && bundle.getString(elementName) != null
+		data.contains(elementName) && data.get(elementName) != null
 
 	override fun decodeNull(): Nothing? = null
 
 	// natively supported
 
-	override fun decodeInt(): Int = bundle.getString(elementName)!!.toInt()
-	override fun decodeLong(): Long = bundle.getString(elementName)!!.toLong()
-	override fun decodeFloat(): Float = bundle.getString(elementName)!!.toFloat()
-	override fun decodeBoolean(): Boolean = bundle.getString(elementName)!!.toBooleanStrict()
-	override fun decodeString(): String = bundle.getString(elementName)!!
+	override fun decodeInt(): Int = data.get(elementName)!!.toInt()
+	override fun decodeLong(): Long = data.get(elementName)!!.toLong()
+	override fun decodeFloat(): Float = data.get(elementName)!!.toFloat()
+	override fun decodeBoolean(): Boolean = data.get(elementName)!!.toBooleanStrict()
+	override fun decodeString(): String = data.get(elementName)!!
 
 	// delegated to other primitives
 
-	override fun decodeDouble(): Double = bundle.getString(elementName)!!.toDouble()
-	override fun decodeByte(): Byte = bundle.getString(elementName)!!.toByte()
-	override fun decodeShort(): Short = bundle.getString(elementName)!!.toShort()
-	override fun decodeChar(): Char = bundle.getString(elementName)!![0]
+	override fun decodeDouble(): Double = data.get(elementName)!!.toDouble()
+	override fun decodeByte(): Byte = data.get(elementName)!!.toByte()
+	override fun decodeShort(): Short = data.get(elementName)!!.toShort()
+	override fun decodeChar(): Char = data.get(elementName)!![0]
 
 	override fun decodeEnum(enumDescriptor: SerialDescriptor): Int = decodeInt()
 

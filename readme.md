@@ -111,6 +111,36 @@ private fun Home(
 }
 ```
 
+### ViewModel
+
+You can pass your destination arguments directly from the UI using parameters/the assisted inject feature.
+
+For example, in Koin:
+
+```kotlin
+val KoinModule = module {
+	viewModelOf(::DemoViewModel)
+}
+
+fun DemoScreen(arguments: HomeDestinations.Demo) {
+	val viewModel = getViewModel<DemoViewModel> { parametersOf(arguments) }
+}
+
+class DemoViewModel(
+	arguments: HomeDestinations.Demo,
+)
+```
+
+Alternatively, you can read your destination from a `SavedStateHandle` instance:
+
+```kotlin
+class DemoViewModel(
+	state: SavedStateHandle,
+) : ViewModel() {
+	val arguments = state.decodeArguments<HomeDestinations.Demo>()
+}
+```
+
 ### Extensibility
 
 What about cooperation with Accompanist's Material `bottomSheet {}` integration? Do not worry. Basically, all the functionality is just a few simple functions. Create your own abstraction and use `createRoutePattern()`, `createNavArguments()`, `decodeArguments()` and `registerDestinationType()` functions.

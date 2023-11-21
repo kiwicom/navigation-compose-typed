@@ -1,11 +1,12 @@
 package com.kiwi.navigationcompose.typed
 
-import android.os.Bundle
 import androidx.annotation.MainThread
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.core.os.bundleOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
@@ -15,7 +16,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.kiwi.navigationcompose.typed.internal.UriBundleDecoder
+import com.kiwi.navigationcompose.typed.internal.BundleDataMap
+import com.kiwi.navigationcompose.typed.internal.UriDataDecoder
+import com.kiwi.navigationcompose.typed.internal.decodeArguments
 import com.kiwi.navigationcompose.typed.internal.isNavTypeOptional
 import kotlin.reflect.KClass
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -265,9 +268,13 @@ public fun <T : Destination> decodeArguments(
 ): T {
 	// Arguments may be empty if the destination does not have any parameters,
 	// and it is a start destination.
-	val decoder = UriBundleDecoder(navBackStackEntry.arguments ?: Bundle())
+	val decoder = UriDataDecoder(BundleDataMap(navBackStackEntry.arguments ?: bundleOf()))
 	return decoder.decodeSerializableValue(serializer)
 }
+
+@ExperimentalSerializationApi
+public inline fun <reified T : Destination> SavedStateHandle.decodeArguments(): T =
+	this.decodeArguments(serializer())
 
 @Deprecated(
 	"Deprecated in favor of navigation builder that supports AnimatedContent",
