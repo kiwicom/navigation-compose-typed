@@ -36,3 +36,7 @@ public final class com/kiwi/navigationcompose/typed/RoutingKt {
 	public static final fun toDeepLinkUri (Lcom/kiwi/navigationcompose/typed/Destination;)Landroid/net/Uri;
 }
 
+public final class com/kiwi/navigationcompose/typed/internal/NavBuilderKt {
+	public static final fun decodeArguments (Landroidx/lifecycle/SavedStateHandle;Lkotlinx/serialization/KSerializer;)Lcom/kiwi/navigationcompose/typed/Destination;
+}
+

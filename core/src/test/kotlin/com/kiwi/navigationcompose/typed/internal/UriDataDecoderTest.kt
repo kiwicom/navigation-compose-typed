@@ -16,7 +16,7 @@ import org.robolectric.RobolectricTestRunner
 
 @OptIn(ExperimentalSerializationApi::class)
 @RunWith(RobolectricTestRunner::class)
-internal class UriBundleDecoderTest {
+internal class UriDataDecoderTest {
 	@Suppress("unused")
 	@Serializable
 	class TestData(
@@ -53,7 +53,7 @@ internal class UriBundleDecoderTest {
 			"o" to "\"14\"",
 		)
 
-		val decoder = UriBundleDecoder(bundle)
+		val decoder = UriDataDecoder(BundleDataMap(bundle))
 		val data = decoder.decodeSerializableValue(serializer<TestData>())
 
 		Assert.assertEquals(1, data.a)
