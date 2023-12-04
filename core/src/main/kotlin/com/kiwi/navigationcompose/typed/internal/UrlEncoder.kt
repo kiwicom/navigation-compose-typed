@@ -38,17 +38,25 @@ internal class UrlEncoder(
 	}
 
 	override fun encodeNull() {}
+
 	override fun encodeNotNullMark() {}
 
 	override fun encodeInt(value: Int) = appendValue(value.toString())
+
 	override fun encodeLong(value: Long) = appendValue(value.toString())
+
 	override fun encodeFloat(value: Float) = appendValue(value.toString())
+
 	override fun encodeBoolean(value: Boolean) = appendValue(if (value) "true" else "false")
+
 	override fun encodeString(value: String) = appendValue(value)
 
 	override fun encodeDouble(value: Double) = appendValue(value.toString())
+
 	override fun encodeByte(value: Byte) = appendValue(value.toString())
+
 	override fun encodeShort(value: Short) = appendValue(value.toString())
+
 	override fun encodeChar(value: Char) = appendValue(value.toString())
 
 	override fun encodeEnum(enumDescriptor: SerialDescriptor, index: Int) = encodeInt(index)
