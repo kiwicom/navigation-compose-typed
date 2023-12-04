@@ -25,6 +25,12 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
 
+private typealias EnterTransitionFactory =
+	(@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)
+
+private typealias ExitTransitionFactory =
+	(@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)
+
 /**
  * Add the Composable to the NavGraphBuilder with type-safe arguments and route.
  *
@@ -50,10 +56,10 @@ import kotlinx.serialization.serializer
 @MainThread
 public inline fun <reified T : Destination> NavGraphBuilder.composable(
 	deepLinks: List<NavDeepLink> = emptyList(),
-	noinline enterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
-	noinline exitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
-	noinline popEnterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
-	noinline popExitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
+	noinline enterTransition: EnterTransitionFactory? = null,
+	noinline exitTransition: ExitTransitionFactory? = null,
+	noinline popEnterTransition: EnterTransitionFactory? = enterTransition,
+	noinline popExitTransition: ExitTransitionFactory? = exitTransition,
 	noinline content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
 	composable(
@@ -185,10 +191,10 @@ public fun <T : Destination> NavGraphBuilder.dialog(
 public inline fun <reified T : Destination> NavGraphBuilder.navigation(
 	startDestination: String,
 	deepLinks: List<NavDeepLink> = emptyList(),
-	noinline enterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
-	noinline exitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
-	noinline popEnterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
-	noinline popExitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
+	noinline enterTransition: EnterTransitionFactory? = null,
+	noinline exitTransition: ExitTransitionFactory? = null,
+	noinline popEnterTransition: EnterTransitionFactory? = enterTransition,
+	noinline popExitTransition: ExitTransitionFactory? = exitTransition,
 	noinline builder: NavGraphBuilder.() -> Unit,
 ) {
 	navigation(
@@ -219,10 +225,10 @@ public fun <T : Destination> NavGraphBuilder.navigation(
 	serializer: KSerializer<T>,
 	startDestination: String,
 	deepLinks: List<NavDeepLink> = emptyList(),
-	enterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
-	exitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
-	popEnterTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? = enterTransition,
-	popExitTransition: (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? = exitTransition,
+	enterTransition: EnterTransitionFactory? = null,
+	exitTransition: ExitTransitionFactory? = null,
+	popEnterTransition: EnterTransitionFactory? = enterTransition,
+	popExitTransition: ExitTransitionFactory? = exitTransition,
 	builder: NavGraphBuilder.() -> Unit,
 ) {
 	registerDestinationType(kClass, serializer)

@@ -50,16 +50,23 @@ internal class UriDataDecoder(
 	// natively supported
 
 	override fun decodeInt(): Int = data.get(elementName)!!.toInt()
+
 	override fun decodeLong(): Long = data.get(elementName)!!.toLong()
+
 	override fun decodeFloat(): Float = data.get(elementName)!!.toFloat()
+
 	override fun decodeBoolean(): Boolean = data.get(elementName)!!.toBooleanStrict()
+
 	override fun decodeString(): String = data.get(elementName)!!
 
 	// delegated to other primitives
 
 	override fun decodeDouble(): Double = data.get(elementName)!!.toDouble()
+
 	override fun decodeByte(): Byte = data.get(elementName)!!.toByte()
+
 	override fun decodeShort(): Short = data.get(elementName)!!.toShort()
+
 	override fun decodeChar(): Char = data.get(elementName)!![0]
 
 	override fun decodeEnum(enumDescriptor: SerialDescriptor): Int = decodeInt()

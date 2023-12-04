@@ -26,9 +26,7 @@ public fun NavController.navigate(
 public inline fun <reified T : Destination> NavOptions.Builder.setPopUpTo(
 	inclusive: Boolean,
 	saveState: Boolean = false,
-): NavOptions.Builder {
-	return setPopUpTo(createRoutePattern<T>(), inclusive, saveState)
-}
+): NavOptions.Builder = setPopUpTo(createRoutePattern<T>(), inclusive, saveState)
 
 /**
  * Navigates to the specified [Destination].
@@ -54,10 +52,8 @@ public inline fun <reified T : Destination> NavOptionsBuilder.popUpTo(
 public inline fun <reified T : Destination> NavController.popBackStack(
 	inclusive: Boolean,
 	saveState: Boolean = false,
-): Boolean {
-	return popBackStack(
-		route = createRoutePattern<T>(),
-		inclusive = inclusive,
-		saveState = saveState,
-	)
-}
+): Boolean = popBackStack(
+	route = createRoutePattern<T>(),
+	inclusive = inclusive,
+	saveState = saveState,
+)
