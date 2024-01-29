@@ -5,7 +5,8 @@
     "schedule:weekly",
   ],
   "labels": [
-    "chore"
+    "chore",
+    "skip-changelog",
   ],
   "rebaseWhen": "conflicted",
   "packageRules": [
