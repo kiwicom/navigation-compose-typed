@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.window.DialogProperties
 import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NamedNavArgument
@@ -129,12 +130,14 @@ public fun <T : Destination> NavGraphBuilder.composable(
 @MainThread
 public inline fun <reified T : Destination> NavGraphBuilder.dialog(
 	deepLinks: List<NavDeepLink> = emptyList(),
+	dialogProperties: DialogProperties = DialogProperties(),
 	noinline content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
 	dialog(
 		kClass = T::class,
 		serializer = serializer(),
 		deepLinks = deepLinks,
+		dialogProperties = dialogProperties,
 		content = content,
 	)
 }
@@ -151,6 +154,7 @@ public fun <T : Destination> NavGraphBuilder.dialog(
 	kClass: KClass<T>,
 	serializer: KSerializer<T>,
 	deepLinks: List<NavDeepLink> = emptyList(),
+	dialogProperties: DialogProperties = DialogProperties(),
 	content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
 	registerDestinationType(kClass, serializer)
@@ -158,6 +162,7 @@ public fun <T : Destination> NavGraphBuilder.dialog(
 		route = createRoutePattern(serializer),
 		arguments = createNavArguments(serializer),
 		deepLinks = deepLinks,
+		dialogProperties = dialogProperties,
 	) { navBackStackEntry ->
 		decodeArguments(serializer, navBackStackEntry).content(navBackStackEntry)
 	}
