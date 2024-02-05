@@ -11,7 +11,7 @@ plugins {
 	id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.13.2" apply false
 	id("org.jmailen.kotlinter") version "4.1.1" apply false
 	id("com.android.application") version "8.2.2" apply false
-	id("com.vanniktech.maven.publish.base") version "0.25.3" apply false
+	id("com.vanniktech.maven.publish.base") version "0.27.0" apply false
 }
 
 subprojects {
