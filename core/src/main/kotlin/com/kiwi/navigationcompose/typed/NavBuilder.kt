@@ -331,3 +331,43 @@ public fun <T : Destination> NavGraphBuilder.navigation(
 		builder = builder,
 	)
 }
+
+@Deprecated(
+	"Deprecated in favor of dialog builder that supports DialogProperties",
+	level = DeprecationLevel.HIDDEN,
+)
+@ExperimentalSerializationApi
+@MainThread
+public inline fun <reified T : Destination> NavGraphBuilder.dialog(
+	deepLinks: List<NavDeepLink> = emptyList(),
+	noinline content: @Composable T.(NavBackStackEntry) -> Unit,
+) {
+	dialog(
+		kClass = T::class,
+		serializer = serializer(),
+		deepLinks = deepLinks,
+		content = content,
+	)
+}
+
+@Deprecated(
+	"Deprecated in favor of dialog builder that supports DialogProperties",
+	level = DeprecationLevel.HIDDEN,
+)
+@ExperimentalSerializationApi
+@MainThread
+public fun <T : Destination> NavGraphBuilder.dialog(
+	kClass: KClass<T>,
+	serializer: KSerializer<T>,
+	deepLinks: List<NavDeepLink> = emptyList(),
+	content: @Composable T.(NavBackStackEntry) -> Unit,
+) {
+	registerDestinationType(kClass, serializer)
+	dialog(
+		route = createRoutePattern(serializer),
+		arguments = createNavArguments(serializer),
+		deepLinks = deepLinks,
+	) { navBackStackEntry ->
+		decodeArguments(serializer, navBackStackEntry).content(navBackStackEntry)
+	}
+}
