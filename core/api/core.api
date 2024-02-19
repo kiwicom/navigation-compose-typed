@@ -8,7 +8,9 @@ public final class com/kiwi/navigationcompose/typed/NavBuilderKt {
 	public static synthetic fun composable$default (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Lkotlin/jvm/functions/Function4;ILjava/lang/Object;)V
 	public static final fun createNavArguments (Lkotlinx/serialization/KSerializer;)Ljava/util/List;
 	public static final fun decodeArguments (Lkotlinx/serialization/KSerializer;Landroidx/navigation/NavBackStackEntry;)Lcom/kiwi/navigationcompose/typed/Destination;
-	public static final fun dialog (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Lkotlin/jvm/functions/Function4;)V
+	public static final fun dialog (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Landroidx/compose/ui/window/DialogProperties;Lkotlin/jvm/functions/Function4;)V
+	public static final synthetic fun dialog (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Lkotlin/jvm/functions/Function4;)V
+	public static synthetic fun dialog$default (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Landroidx/compose/ui/window/DialogProperties;Lkotlin/jvm/functions/Function4;ILjava/lang/Object;)V
 	public static synthetic fun dialog$default (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/util/List;Lkotlin/jvm/functions/Function4;ILjava/lang/Object;)V
 	public static final synthetic fun navigation (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
 	public static final fun navigation (Landroidx/navigation/NavGraphBuilder;Lkotlin/reflect/KClass;Lkotlinx/serialization/KSerializer;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
