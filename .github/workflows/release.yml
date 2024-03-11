@@ -31,7 +31,7 @@ jobs:
         run: |
           ./gradlew :demo:bundleRelease :demo:assembleRelease
       - name: Upload APK to release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         id: release
         with:
           files: |
