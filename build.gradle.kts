@@ -10,7 +10,7 @@ plugins {
 	id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22" apply false
 	id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.14.0" apply false
 	id("org.jmailen.kotlinter") version "4.1.1" apply false
-	id("com.android.application") version "8.3.0" apply false
+	id("com.android.application") version "8.3.1" apply false
 	id("com.vanniktech.maven.publish.base") version "0.27.0" apply false
 }
 
