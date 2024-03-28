@@ -26,11 +26,12 @@ Add this library dependency and KotlinX.Serialization support
 
 ```kotlin
 plugins {
-	id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
 }
+
 dependencies {
-	implementation("com.kiwi.navigation-compose.typed:core:<version>")
-	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0")
+    implementation("com.kiwi.navigation-compose.typed:core:<version>")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0")
 }
 ```
 
@@ -44,13 +45,14 @@ Create app's destinations
 import com.kiwi.navigationcompose.typed.Destination
 
 sealed interface Destinations : Destination {
-	@Serializable
-	data object Home : Destinations
+    
+    @Serializable
+    data object Home : Destinations
 
-	@Serializable
-	data class Article(
-		val id: String,
-	) : Destinations
+    @Serializable
+    data class Article(
+        val id: String,
+    ) : Destinations
 }
 ```
 
@@ -61,15 +63,15 @@ import com.kiwi.navigationcompose.typed.composable
 import com.kiwi.navigationcompose.typed.createRoutePattern
 
 NavGraph(
-	startDestination = createRoutePattern<Destinations.Home>(),
+    startDestination = createRoutePattern<Destinations.Home>(),
 ) {
-	composable<Destinations.Home> {
-		Home()
-	}
-	composable<Destinations.Article> {
-		// this is Destinations.Article
-		Article(id)
-	}
+    composable<Destinations.Home> {
+        Home()
+    }
+    composable<Destinations.Article> {
+        // this is Destinations.Article
+        Article(id)
+    }
 }
 ```
 
@@ -81,33 +83,33 @@ import com.kiwi.navigationcompose.typed.navigate
 
 @Composable
 fun AppNavHost() {
-	val navController = rememberNavController()
-	NavGraph(
-		navController = navController,
-	) {
-		composable<Destinations.Home> {
-			Home(navController::navigate)
-		}
-	}
+    val navController = rememberNavController()
+    NavGraph(
+        navController = navController,
+    ) {
+        composable<Destinations.Home> {
+            Home(navController::navigate)
+        }
+    }
 }
 
 @Composable
 private fun Home(
-	onNavigate: (Destination) -> Unit,
+    onNavigate: (Destination) -> Unit,
 ) {
-	Home(
-		onArticleClick = { id -> onNavigate(Destinations.Article(id)) },
-	)
+    Home(
+        onArticleClick = { id -> onNavigate(Destinations.Article(id)) },
+    )
 }
 
 @Composable
 private fun Home(
-	onArticleClick: (id: Int) -> Unit,
+    onArticleClick: (id: Int) -> Unit,
 ) {
-	Column {
-		Button(onClick = { onArticleClick(1) }) { Text("...") }
-		Button(onClick = { onArticleClick(2) }) { Text("...") }
-	}
+    Column {
+        Button(onClick = { onArticleClick(1) }) { Text("...") }
+        Button(onClick = { onArticleClick(2) }) { Text("...") }
+    }
 }
 ```
 
@@ -119,15 +121,15 @@ For example, in Koin:
 
 ```kotlin
 val KoinModule = module {
-	viewModelOf(::DemoViewModel)
+    viewModelOf(::DemoViewModel)
 }
 
 fun DemoScreen(arguments: HomeDestinations.Demo) {
-	val viewModel = getViewModel<DemoViewModel> { parametersOf(arguments) }
+    val viewModel = getViewModel<DemoViewModel> { parametersOf(arguments) }
 }
 
 class DemoViewModel(
-	arguments: HomeDestinations.Demo,
+    arguments: HomeDestinations.Demo,
 )
 ```
 
@@ -135,9 +137,9 @@ Alternatively, you can read your destination from a `SavedStateHandle` instance:
 
 ```kotlin
 class DemoViewModel(
-	state: SavedStateHandle,
+    state: SavedStateHandle,
 ) : ViewModel() {
-	val arguments = state.decodeArguments<HomeDestinations.Demo>()
+    val arguments = state.decodeArguments<HomeDestinations.Demo>()
 }
 ```
 
@@ -153,23 +155,23 @@ import com.kiwi.navigationcompose.typed.Destination
 import com.kiwi.navigationcompose.typed.registerDestinationType
 
 private inline fun <reified T : Destination> NavGraphBuilder.bottomSheet(
-	noinline content: @Composable T.(NavBackStackEntry) -> Unit,
+    noinline content: @Composable T.(NavBackStackEntry) -> Unit,
 ) {
-	val serializer = serializer<T>()
-	registerDestinationType(T::class, serializer)
-	bottomSheet(
-		route = createRoutePattern(serializer),
-		arguments = createNavArguments(serializer),
-	) {
-		val arguments = decodeArguments(serializer, it)
-		arguments.content(it)
-	}
+    val serializer = serializer<T>()
+    registerDestinationType(T::class, serializer)
+    bottomSheet(
+        route = createRoutePattern(serializer),
+        arguments = createNavArguments(serializer),
+    ) {
+        val arguments = decodeArguments(serializer, it)
+        arguments.content(it)
+    }
 }
 
 NavGraph {
-	bottomSheet<Destinations.Article> {
-		Article(id)
-	}
+    bottomSheet<Destinations.Article> {
+        Article(id)
+    }
 }
 ```
 
@@ -185,38 +187,39 @@ import com.kiwi.navigationcompose.typed.ResultDestination
 import com.kiwi.navigationcompose.typed.setResult
 
 sealed interface Destinations : Destination {
-	@Serializable
-	data object Dialog : Destinations, ResultDestination<Dialog.Result> {
-		@Serializable
-		data class Result(
-			val something: Int,
-		)
-	}
+
+    @Serializable
+    data object Dialog : Destinations, ResultDestination<Dialog.Result> {
+        @Serializable
+        data class Result(
+            val something: Int,
+        )
+    }
 }
 
 @Composable
 fun Host(navController: NavController) {
-	DialogResultEffect(navController) { result: Destinations.Dialog.Result ->
-		println(result)
-		// process the result
-	}
+    DialogResultEffect(navController) { result: Destinations.Dialog.Result ->
+        println(result)
+        // process the result
+    }
 
-	Button(
-		onClick = { navController.navigate(Destinations.Dialog) },
-	) {
-		Text("Open")
-	}
+    Button(
+        onClick = { navController.navigate(Destinations.Dialog) },
+    ) {
+        Text("Open")
+    }
 }
 
 @Composable
 fun Dialog(navController: NavController) {
-	Button(
-		onClick = {
-			navController.setResult(Destinations.Dialog.Result(something = 42))
-			navController.popBackStack()
-		}
-	) {
-		Text("Set and close")
-	}
+    Button(
+        onClick = {
+            navController.setResult(Destinations.Dialog.Result(something = 42))
+            navController.popBackStack()
+        }
+    ) {
+        Text("Set and close")
+    }
 }
 ```
