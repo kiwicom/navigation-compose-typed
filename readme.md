@@ -180,6 +180,9 @@ NavGraph {
 Another set of functionality is provided to support the result sharing. First, define the destination as `ResultDestination` type and specify the result type class. Then open the screen as usual and utilize `ComposableResultEffect` or `DialogResultEffect` to observe the destination's result. To send the result, use
 `NavController`'s extension `setResult`.
 
+> [!WARNING]  
+> Do not make the Result class sealed as it may cause an issue (see kiwicom/navigation-compose-typed#133). You may put a sealed type to a Result's property.
+
 ```kotlin
 import com.kiwi.navigationcompose.typed.Destination
 import com.kiwi.navigationcompose.typed.DialogResultEffect
