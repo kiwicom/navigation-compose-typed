@@ -181,7 +181,7 @@ Another set of functionality is provided to support the result sharing. First, d
 `NavController`'s extension `setResult`.
 
 > [!WARNING]  
-> Do not make the Result class sealed as it may cause issue (see kiwicom/navigation-compose-typed#133). You may put a sealed type to a Result's property.
+> Do not make the Result class sealed as it may cause an issue (see kiwicom/navigation-compose-typed#133). You may put a sealed type to a Result's property.
 
 ```kotlin
 import com.kiwi.navigationcompose.typed.Destination
