@@ -6,9 +6,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-	id("org.jetbrains.kotlin.android") version "1.9.23" apply false
-	id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23" apply false
-	id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.14.0" apply false
+	id("org.jetbrains.kotlin.android") version "1.9.25" apply false
+	id("org.jetbrains.kotlin.plugin.serialization") version "1.9.25" apply false
+	id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.16.3" apply false
 	id("org.jmailen.kotlinter") version "4.1.1" apply false
 	id("com.android.application") version "8.3.0" apply false
 	id("com.vanniktech.maven.publish.base") version "0.27.0" apply false
